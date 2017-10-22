@@ -1,0 +1,38 @@
+steps:
+
+# Decrypt secret
+- name: gcr.io/cloud-builders/gcloud
+  args:
+  - kms
+  - decrypt
+  - --ciphertext-file=.env.production.enc
+  - --plaintext-file=.env.production
+  - --location=global
+  - --keyring=builder-keyring
+  - --key=builder-key
+
+# Build rails container
+- name: 'gcr.io/cloud-builders/docker'
+  args: [ 'build', '-t', 'gcr.io/$PROJECT_ID/rails-docker-sample:$BRANCH_NAME-$REVISION_ID', '.' ]
+
+# DB Migration 
+- name: 'gcr.io/$PROJECT_ID/rails-docker-sample:$BRANCH_NAME-$REVISION_ID'
+  args: [ 'bundle', 'exec', 'rails', 'db', 'migrate', 'RAILS_ENV=test' ]
+
+# Run rspec
+- name: 'gcr.io/$PROJECT_ID/rails-docker-sample:$BRANCH_NAME-$REVISION_ID'
+  args: [ 'bundle', 'exec', 'rspec' ]
+
+# Push docker image 
+- name: 'gcr.io/cloud-builders/docker'
+  args: ["push", "gcr.io/$PROJECT_ID/rails-docker-sample:$BRANCH_NAME-$REVISION_ID"]
+
+# Deploy to gke 
+- name: 'gcr.io/cloud-builders/gcloud'
+  entrypoint: 'bash'
+  args:
+  - '-c'
+  - |
+    gcloud container clusters get-credentials bg-dev --zone asia-northeast1-a
+    kubectl set image deployment/rails rails=gcr.io/$PROJECT_ID/bluegiant-ui:$BRANCH_NAME-$REVISION_ID
+

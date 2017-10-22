@@ -1,0 +1,6 @@
+gcloud kms encrypt \
+  --plaintext-file=.env.production \
+  --ciphertext-file=.env.production.enc \
+  --location=global \
+  --keyring=builder-keyring \
+  --key=builder-key 
