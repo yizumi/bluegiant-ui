@@ -26,6 +26,7 @@ group :development, :test do
   gem 'rspec-html-matchers'
   gem 'rubocop'
   gem 'spring-commands-rspec'
+  gem 'rspec_junit_formatter'
 end
 
 group :test do
