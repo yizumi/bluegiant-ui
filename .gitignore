@@ -19,6 +19,11 @@
 /node_modules
 /yarn-error.log
 
+# Application
 .byebug_history
 /vendor
 /tmp
+
+# Secrets
+.env
+.env.production
