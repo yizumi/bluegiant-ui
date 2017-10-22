@@ -20,6 +20,7 @@ group :development, :test do
   gem 'capybara', '~> 2.13'
   gem 'rspec-rails'
   gem 'factory_bot'
+  gem 'spring-commands-rspec'
 end
 
 group :test do
