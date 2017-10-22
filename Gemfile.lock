@@ -251,6 +251,7 @@ DEPENDENCIES
   rspec-rails
   rspec_junit_formatter
   rubocop
+  ruby_dep
   sass-rails (~> 5.0)
   selenium-webdriver
   slim-rails
