@@ -22,4 +22,3 @@ production:
   username: bluegiant
   password: <%= ENV['BLUEGIANT_DATABASE_PASSWORD'] %>
   host: mysql
-  port: 3307
