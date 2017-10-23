@@ -1,0 +1,15 @@
+steps:
+- name: 'gcr.io/cloud-builders/gcloud'
+  args:
+  - kms
+  - decrypt
+  - --ciphertext-file=.env.production.enc
+  - --plaintext-file=.env.production
+  - --location=global
+  - --keyring=builder-keyring
+  - --key=builder-key
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '-t', 'gcr.io/$PROJECT_ID/bluegiant-ui:$COMMIT_SHA', '.']
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['tag', 'gcr.io/$PROJECT_ID/bluegiant-ui:$COMMIT_SHA', 'gcr.io/$PROJECT_ID/bluegiant-ui:latest']
+images: ['gcr.io/$PROJECT_ID/bluegiant-ui']

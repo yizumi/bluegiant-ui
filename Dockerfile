@@ -30,7 +30,7 @@ ADD . $APP_HOME
 ENV RAILS_ENV production
 RUN bundle exec rake tmp:create
 RUN bundle exec rake assets:precompile
-COPY .env.production $APP_HOME/
+COPY ./.env.production $APP_HOME/
 
 EXPOSE 3000
 
