@@ -30,7 +30,10 @@ ADD . $APP_HOME
 ENV RAILS_ENV production
 RUN bundle exec rake tmp:create
 RUN bundle exec rake assets:precompile
-COPY .env.production $APP_HOME/
+
+# Decrypt
+RUN gcloud kms decrypt --location=global --keyring=bluegiant-ui --key=builder-key \
+    --ciphertext-file=$APP_HOME/.env.production.enc --plaintext-file=$APP_HOME/.env.production
 
 EXPOSE 3000
 
