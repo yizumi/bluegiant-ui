@@ -1,6 +1,4 @@
 steps:
-- name: 'gcr.io/cloud-builders/docker'
-  args: ['build', '-t', 'gcr.io/$PROJECT_ID/bluegiant-ui:$COMMIT_SHA', '.']
 - name: 'gcr.io/cloud-builders/gcloud'
   args:
   - kms
@@ -10,3 +8,5 @@ steps:
   - --location=global
   - --keyring=bluegiant-ui
   - --key=builder-key
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '-t', 'gcr.io/$PROJECT_ID/bluegiant-ui:$COMMIT_SHA', '.']
