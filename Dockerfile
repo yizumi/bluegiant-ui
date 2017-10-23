@@ -31,10 +31,6 @@ ENV RAILS_ENV production
 RUN bundle exec rake tmp:create
 RUN bundle exec rake assets:precompile
 
-# Decrypt
-RUN /google/google-cloud-sdk/bin/gcloud kms decrypt --location=global --keyring=bluegiant-ui --key=builder-key \
-    --ciphertext-file=$APP_HOME/.env.production.enc --plaintext-file=$APP_HOME/.env.production
-
 EXPOSE 3000
 
 CMD ./start-server.sh
