@@ -19,10 +19,13 @@
 /node_modules
 /yarn-error.log
 
-# Application
+# Development files
 .byebug_history
+
+# System generated files
 /vendor
 /tmp
+/public/assets
 
 # Secrets
 .env
