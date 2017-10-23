@@ -5,20 +5,27 @@ application up and running.
 
 Things you may want to cover:
 
-* Ruby version
+## Ruby version
 
-* System dependencies
+## System dependencies
 
-* Configuration
+## Configuration
 
-* Database creation
+## Database creation
 
-* Database initialization
+## Database initialization
 
-* How to run the test suite
+## How to run the test suite
 
-* Services (job queues, cache servers, search engines, etc.)
+```
+$ bin/rspec
+```
 
-* Deployment instructions
+## Services (job queues, cache servers, search engines, etc.)
 
-* ...
+# Deployment instructions
+
+```
+$ docker build -t gcr.io/${PROJECT_ID}/bluegiant-ui .
+$ docker run -t --rm -p 3000:3000 gcr.io/${PROJECT_ID}/bluegiant-ui
+```
