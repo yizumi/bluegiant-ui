@@ -47,7 +47,7 @@ spec:
           valueFrom:
             secretKeyRef:
               name: cloudsql-db-credentials
-              key: password
+              key: username 
       - image: gcr.io/cloudsql-docker/gce-proxy:1.11
         imagePullPolicy: IfNotPresent
         name: cloudsql-proxy
