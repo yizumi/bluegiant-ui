@@ -22,6 +22,7 @@ steps:
     gcloud components install kubectl
     gcloud container clusters get-credentials bluegiant-cluster --zone asia-northeast1-a
     kubectl set image deployment/bluegiant-ui bluegiant-ui=gcr.io/$PROJECT_ID/bluegiant-ui:$COMMIT_SHA
+    apk add --update curl
     curl -X POST -H 'Content-type: application/json' \
       --data '{"text":"Successfully deployed gcr.io/$PROJECT_ID/bluegiant-ui:$COMMIT_SHA"}' \
       https://hooks.slack.com/services/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
