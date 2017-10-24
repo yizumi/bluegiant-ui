@@ -18,7 +18,7 @@ test:
 
 production:
   <<: *default
-  database: bluegiant_production
-  username: bluegiant
+  host: <%= ENV['BLUEGIANT_DATABASE_HOST'] %>
+  database: bluegiant
+  username: <%= ENV['BLUEGIANT_DATABASE_USER'] %>
   password: <%= ENV['BLUEGIANT_DATABASE_PASSWORD'] %>
-  host: mysql

@@ -2,6 +2,10 @@ class CoinigyService
   class CoinigyServiceError < StandardError; end
 
   def exchanges
+    @exchanges ||= fetch_exchanges
+  end
+
+  def fetch_exchanges
     res = http_post('https://api.coinigy.com/api/v1/exchanges')
     data = JSON.parse(res.body, {:symbolize_names => true})[:data]
     data.map { |e| Exchange.from_json(e) }
