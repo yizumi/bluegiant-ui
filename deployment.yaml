@@ -56,7 +56,7 @@ spec:
         command:
         - /cloud_sql_proxy
         - --dir=/cloudsql
-        - -instances=bluegiant-183723:asia-northeast1:bluegiant
+        - -instances=bluegiant-183723:asia-northeast1:bluegiant=tcp:3306
         - -credential_file=/secrets/cloudsql/credentials.json
         volumeMounts:
         - name: cloudsql-instance-credentials
