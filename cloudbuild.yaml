@@ -4,8 +4,7 @@ steps:
   args:
   - '-c'
   - |
-    sudo apt-get install curl
-    curl -X POST -H 'Content-type: application/json' \
+    /usr/bin/curl -X POST -H 'Content-type: application/json' \
       --data '{"text":"Successfully deployed gcr.io/$PROJECT_ID/bluegiant-ui:$COMMIT_SHA"}' \
       https://hooks.slack.com/services/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
 - name: 'gcr.io/cloud-builders/gcloud'
