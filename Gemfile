@@ -19,6 +19,7 @@ gem 'jbuilder', '~> 2.5'
 gem 'slim-rails'
 gem 'listen', '>= 3.0.5', '< 3.2'
 gem 'httpclient'
+gem 'webmock'
 
 group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
@@ -31,7 +32,6 @@ group :development, :test do
   gem 'spring-commands-rspec'
   gem 'rspec_junit_formatter'
   gem 'annotate'
-  gem 'webmock'
 end
 
 group :test do
