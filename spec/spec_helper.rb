@@ -1,5 +1,4 @@
 require 'rspec-html-matchers'
-require 'webmock'
 
 RSpec.configure do |config|
   config.expect_with :rspec do |expectations|
@@ -12,5 +11,4 @@ RSpec.configure do |config|
 
   config.shared_context_metadata_behavior = :apply_to_host_groups
   config.include RSpecHtmlMatchers
-  config.include WebMock::API
 end
