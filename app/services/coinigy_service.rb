@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CoinigyService
   class CoinigyServiceError < StandardError; end
 
@@ -7,7 +9,7 @@ class CoinigyService
 
   def fetch_exchanges
     res = http_post('https://api.coinigy.com/api/v1/exchanges')
-    data = JSON.parse(res.body, {:symbolize_names => true})[:data]
+    data = JSON.parse(res.body, symbolize_names: true)[:data]
     data.map { |e| Exchange.from_json(e) }
   end
 
@@ -20,7 +22,7 @@ class CoinigyService
     res
   end
 
-  def auth_headers 
+  def auth_headers
     {
       'Content-Type' => 'application/json',
       'X-API-KEY' => 'cca9053c13ee18875d1e66244d3660a4',

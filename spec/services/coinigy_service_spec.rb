@@ -1,10 +1,11 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe CoinigyService do
   before do
-    stub_request(:post, 'https://api.coinigy.com/api/v1/exchanges').
-      to_return(status: 200, body: '''
-        {
+    stub_request(:post, 'https://api.coinigy.com/api/v1/exchanges')
+      .to_return(status: 200, body: '''{
           "data":[
             {
               "exch_id": "2",

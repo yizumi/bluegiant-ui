@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -10,18 +12,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171023142438) do
-
-  create_table "exchanges", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.string "code", null: false
-    t.string "name", null: false
-    t.decimal "fee", precision: 15, scale: 10
-    t.boolean "trade_enabled", null: false
-    t.boolean "balance_enabled", null: false
-    t.string "url"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["code"], name: "index_exchanges_on_code"
+ActiveRecord::Schema.define(version: 20_171_023_142_438) do
+  create_table 'exchanges', force: :cascade, options: 'ENGINE=InnoDB DEFAULT CHARSET=utf8' do |t|
+    t.string 'code', null: false
+    t.string 'name', null: false
+    t.decimal 'fee', precision: 15, scale: 10
+    t.boolean 'trade_enabled', null: false
+    t.boolean 'balance_enabled', null: false
+    t.string 'url'
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
+    t.index ['code'], name: 'index_exchanges_on_code'
   end
-
 end
