@@ -21,5 +21,5 @@ steps:
   - |
     gcloud components install kubectl
     gcloud container clusters get-credentials bluegiant-cluster --zone asia-northeast1-a
-    kubectl set image deployment/bluegiant-ui bluegiant-ui=gcr.io/$PROJECT_ID/blugiant-ui:$COMMIT_SHA
+    kubectl set image deployment/bluegiant-ui bluegiant-ui=gcr.io/$PROJECT_ID/bluegiant-ui:$COMMIT_SHA
 images: ['gcr.io/$PROJECT_ID/bluegiant-ui']
