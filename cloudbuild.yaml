@@ -28,6 +28,6 @@ steps:
   - '-c'
   - |
     curl -X POST -H 'Content-type: application/json' \
-      --data '{"attachments":[{"color":"#36a64f","text":"Successfully deployed lastest master commit","fields":[{"title":"Container Image","value":"High","short":false}]}]}' \
+      --data '{"attachments":[{"color":"#36a64f","text":"Successfully deployed lastest master commit","fields":[{"title":"Container Image","value":"gcr.io/$PROJECT_ID/bluegiant-ui:$COMMIT_SHA","short":false}]}]}' \
       https://hooks.slack.com/services/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
 images: ['gcr.io/$PROJECT_ID/bluegiant-ui']
