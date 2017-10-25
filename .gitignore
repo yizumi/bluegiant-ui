@@ -30,3 +30,4 @@
 # Secrets
 .env
 .env.production
+/secrets
