@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 Rails.application.configure do
   config.cache_classes = true
   config.eager_load = true
@@ -30,6 +32,6 @@ Rails.application.configure do
     logger.formatter = config.log_formatter
     config.logger    = ActiveSupport::TaggedLogging.new(logger)
   end
-  
+
   config.active_record.dump_schema_after_migration = false
 end
