@@ -1,0 +1,15 @@
+p
+  a(href=exchanges_path) All Exchanges
+
+ul
+  li Code: #{@exchange.code}
+  li Name: #{@exchange.name}
+
+=form_tag(exchange_markets_path(@exchange.code), method: :post)
+  input(type="submit" value="Refresh")
+
+Markets
+table.table
+  - @exchange.markets.each do |market|
+    tr
+      td.bg-market-code =market.code

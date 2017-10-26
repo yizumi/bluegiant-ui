@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'factory_bot'
 require 'rspec-html-matchers'
 
 RSpec.configure do |config|
@@ -13,4 +14,5 @@ RSpec.configure do |config|
 
   config.shared_context_metadata_behavior = :apply_to_host_groups
   config.include RSpecHtmlMatchers
+  config.include FactoryBot::Syntax::Methods
 end

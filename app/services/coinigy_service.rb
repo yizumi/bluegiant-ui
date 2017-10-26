@@ -3,8 +3,10 @@
 class CoinigyService
   class CoinigyServiceError < StandardError; end
 
-  def exchanges
-    @exchanges ||= fetch_exchanges
+  def refresh_exchanges
+    fetch_exchanges.each do |e|
+      Exchange.find_or_create_by(code: e.code).update_attributes(e.attributes.except('id','created_at','updated_at'))
+    end
   end
 
   def fetch_exchanges
@@ -13,11 +15,23 @@ class CoinigyService
     data.map { |e| Exchange.from_json(e) }
   end
 
+  def refresh_markets(exchange)
+    fetch_markets(exchange).each do |m|
+      Market.find_or_create_by(exchange: exchange, code: m.code)
+    end
+  end
+
+  def fetch_markets(exchange)
+    res = http_post('https://api.coinigy.com/api/v1/markets', {'exchange_code': exchange.code})
+    data = JSON.parse(res.body, symbolize_names: true)[:data]
+    data.map { |m| Market.from_json(exchange, m) }
+  end
+
   private
 
-  def http_post(url)
+  def http_post(url, body = nil)
     client = HTTPClient.new
-    res = client.post(url, {}, auth_headers)
+    res = client.post(url, body&.to_json, auth_headers)
     raise StandardError unless res.status == 200
     res
   end

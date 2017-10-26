@@ -1,4 +1,3 @@
-# frozen_string_literal: true
 # == Schema Information
 #
 # Table name: exchanges
@@ -14,17 +13,13 @@
 #  updated_at      :datetime         not null
 #
 
-class Exchange < ApplicationRecord
-  has_many :markets
-
-  def self.from_json(json)
-    Exchange.new(
-      code: json[:exch_code],
-      name: json[:exch_name],
-      fee: BigDecimal.new(json[:exch_fee]),
-      trade_enabled: json[:exch_trade_enabled]&.to_i == 1,
-      balance_enabled: json[:exch_balance_enabled]&.to_i == 1,
-      url: json[:exch_url]
-    )
+FactoryBot.define do
+  factory :exchange do
+    code 'BTCE'
+    name 'BTC-e'
+    fee 0.003
+    trade_enabled true
+    balance_enabled true
+    url 'https://btc-e.com/'
   end
 end
