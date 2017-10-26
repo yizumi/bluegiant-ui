@@ -15,7 +15,7 @@ class ExchangesController < ApplicationController
   end
 
   private
-  
+
   def exchange
     @exchange ||= Exchange.includes(:markets).find_by(code: params[:id])
   end

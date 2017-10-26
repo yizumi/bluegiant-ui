@@ -5,7 +5,7 @@ class CoinigyService
 
   def refresh_exchanges
     fetch_exchanges.each do |e|
-      Exchange.find_or_create_by(code: e.code).update_attributes(e.attributes.except('id','created_at','updated_at'))
+      Exchange.find_or_create_by(code: e.code).update_attributes(e.attributes.except('id', 'created_at', 'updated_at'))
     end
   end
 
@@ -22,7 +22,7 @@ class CoinigyService
   end
 
   def fetch_markets(exchange)
-    res = http_post('https://api.coinigy.com/api/v1/markets', {'exchange_code': exchange.code})
+    res = http_post('https://api.coinigy.com/api/v1/markets', 'exchange_code': exchange.code)
     data = JSON.parse(res.body, symbolize_names: true)[:data]
     data.map { |m| Market.from_json(exchange, m) }
   end

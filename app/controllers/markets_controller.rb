@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class MarketsController < ApplicationController
   def create
     CoinigyService.new.refresh_markets(exchange)

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: markets
@@ -12,5 +14,6 @@
 FactoryBot.define do
   factory :market do
     code 'BTC/CAD'
+    association :exchange, factory: :exchange
   end
 end

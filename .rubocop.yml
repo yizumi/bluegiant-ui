@@ -4,4 +4,5 @@ Style/Documentation:
   Enabled: false
 Metrics/BlockLength:
   Exclude:
-    - 'spec/**/*'
+  - 'spec/**/*'
+  - 'Guardfile'
