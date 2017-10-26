@@ -2,5 +2,7 @@
 
 Rails.application.routes.draw do
   root 'root#index'
-  resources :exchanges, only: [:index, :create]
+  resources :exchanges, only: [:index, :create, :show] do
+    resources :markets, only: [:index, :create]
+  end
 end

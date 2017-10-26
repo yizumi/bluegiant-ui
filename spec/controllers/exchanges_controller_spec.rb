@@ -14,4 +14,15 @@ RSpec.describe ExchangesController, type: :controller do
       end
     end
   end
+  describe '#show' do
+    context 'AS Alex GIVEN market WHEN accesses BTCE' do
+      render_views
+      let!(:exchange) { create(:exchange) }
+      let!(:market) { create(:market, exchange: exchange) }
+      it 'THEN should be able to see a market' do
+        get :show, params: { id: exchange.code }
+        expect(response.body).to have_tag('td.bg-market-code', market.code)
+      end
+    end
+  end
 end

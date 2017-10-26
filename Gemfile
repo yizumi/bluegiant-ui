@@ -21,6 +21,7 @@ gem 'listen', '>= 3.0.5', '< 3.2'
 gem 'sentry-raven'
 gem 'slim-rails'
 gem 'webmock'
+gem 'weak_parameters'
 
 group :development, :test do
   gem 'annotate'
