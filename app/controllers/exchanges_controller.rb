@@ -7,6 +7,6 @@ class ExchangesController < ApplicationController
 
   def create
     @exchanges = CoinigyService.new.refresh_exchanges
-    render :index
+    redirect_to exchanges_path
   end
 end
