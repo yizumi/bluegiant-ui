@@ -29,23 +29,26 @@ RSpec.describe CoinigyService do
         }]
       }''') 
   end
-  describe '#exchanges' do
-    let(:exchange) { described_class.new.exchanges.first }
+  describe '#refresh_exchanges' do
+    before { described_class.new.refresh_exchanges }
+    let(:exchange) { Exchange.first } 
     it 'should return exchange information' do
       expect(exchange.name).to eq('BTC-e')
       expect(exchange.code).to eq('BTCE')
-      # expect(exchange.fee).to eq(0.003)
       expect(exchange.trade_enabled).to be_truthy
       expect(exchange.balance_enabled).to be_truthy
       expect(exchange.url).to eq('https://btc-e.com/')
     end
   end
-  describe '#markets' do
-    let(:exchange) { described_class.new.exchanges.first }
-    let(:market) { described_class.new.markets(exchange.code) }
+  describe '#refresh_markets' do
+    before do
+      described_class.new.refresh_exchanges
+      described_class.new.refresh_markets(Exchange.first)
+    end
+    let(:market) { Market.first }
     it 'should return markets within the given exchange' do
-      expect(market.exchange_code).to be('GDAX')
-      expect(market.name).to be('BTC/CAAD')
+      expect(market.exchange.code).to eq('BTCE')
+      expect(market.code).to eq('BTC/CAD')
     end
   end
 end

@@ -2,5 +2,5 @@
 
 Rails.application.routes.draw do
   root 'root#index'
-  resources :exchanges, only: [:index]
+  resources :exchanges, only: [:index, :create]
 end

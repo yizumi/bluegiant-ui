@@ -1,3 +1,5 @@
+=form_tag(exchanges_path, method: :post) do
+  input(type="submit" value="Refresh")
 table.table
   - @exchanges.each do |exchange|
     tr.bg-exchange

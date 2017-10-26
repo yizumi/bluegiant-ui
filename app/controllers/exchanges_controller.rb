@@ -2,6 +2,11 @@
 
 class ExchangesController < ApplicationController
   def index
-    @exchanges = CoinigyService.new.exchanges
+    @exchanges = Exchange.all
+  end
+
+  def create
+    @exchanges = CoinigyService.new.refresh_exchanges
+    render :index
   end
 end

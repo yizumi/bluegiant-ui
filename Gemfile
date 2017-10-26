@@ -26,7 +26,7 @@ group :development, :test do
   gem 'annotate'
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
   gem 'capybara', '~> 2.13'
-  gem 'factory_bot'
+  gem 'factory_bot_rails'
   gem 'pry'
   gem 'rspec-html-matchers'
   gem 'rspec-rails'
