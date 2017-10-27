@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: markets
@@ -8,9 +10,14 @@
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #
+# Indexes
+#
+#  index_markets_on_exchange_id_and_code  (exchange_id,code)
+#
 
 FactoryBot.define do
   factory :market do
-    code 'BTC/CAD'
+    code 'BTC/USD'
+    association :exchange, factory: :exchange
   end
 end

@@ -1,7 +1,13 @@
 LineLength:
   Max: 120
-Style/Documentation:
-  Enabled: false
 Metrics/BlockLength:
   Exclude:
-    - 'spec/**/*'
+  - 'spec/**/*'
+  - 'lib/tasks/**/*'
+  - 'db/schema.rb'
+  - 'Guardfile'
+Metrics/MethodLength:
+  Exclude:
+  - 'spec/**/*'
+Style/Documentation:
+  Enabled: false

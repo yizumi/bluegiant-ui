@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateMarkets < ActiveRecord::Migration[5.1]
   def change
     create_table :markets do |t|
@@ -6,6 +8,6 @@ class CreateMarkets < ActiveRecord::Migration[5.1]
 
       t.timestamps
     end
-    add_index :markets, [:exchange_id, :code]
+    add_index :markets, %i[exchange_id code]
   end
 end

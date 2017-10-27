@@ -15,13 +15,14 @@ gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
 
 gem 'coffee-rails', '~> 4.2'
+gem 'enumerize'
 gem 'httpclient'
 gem 'jbuilder', '~> 2.5'
 gem 'listen', '>= 3.0.5', '< 3.2'
 gem 'sentry-raven'
 gem 'slim-rails'
-gem 'webmock'
 gem 'weak_parameters'
+gem 'webmock'
 
 group :development, :test do
   gem 'annotate'
@@ -42,6 +43,8 @@ group :test do
 end
 
 group :development do
+  gem 'guard-rspec', require: false
+  gem 'guard-rubocop'
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
   gem 'web-console', '>= 3.3.0'
