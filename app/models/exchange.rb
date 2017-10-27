@@ -1,5 +1,4 @@
 # frozen_string_literal: true
-
 # == Schema Information
 #
 # Table name: exchanges
@@ -13,6 +12,10 @@
 #  url             :string(255)
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
+#
+# Indexes
+#
+#  index_exchanges_on_code  (code)
 #
 
 class Exchange < ApplicationRecord

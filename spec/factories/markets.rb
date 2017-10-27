@@ -1,5 +1,4 @@
 # frozen_string_literal: true
-
 # == Schema Information
 #
 # Table name: markets
@@ -9,6 +8,10 @@
 #  code        :string(255)      not null
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
+#
+# Indexes
+#
+#  index_markets_on_exchange_id_and_code  (exchange_id,code)
 #
 
 FactoryBot.define do
