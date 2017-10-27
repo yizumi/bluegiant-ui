@@ -3,6 +3,8 @@ LineLength:
 Metrics/BlockLength:
   Exclude:
   - 'spec/**/*'
+  - 'lib/tasks/**/*'
+  - 'db/schema.rb'
   - 'Guardfile'
 Metrics/MethodLength:
   Exclude:
