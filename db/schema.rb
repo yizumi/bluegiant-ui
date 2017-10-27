@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171027091605) do
+ActiveRecord::Schema.define(version: 20171027161509) do
 
   create_table "delayed_jobs", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer "priority", default: 0, null: false
@@ -34,17 +34,21 @@ ActiveRecord::Schema.define(version: 20171027091605) do
     t.boolean "trade_enabled"
     t.boolean "balance_enabled"
     t.string "url"
+    t.boolean "subscribed", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["code"], name: "index_exchanges_on_code"
+    t.index ["subscribed"], name: "index_exchanges_on_subscribed"
   end
 
   create_table "markets", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer "exchange_id", null: false
     t.string "code", null: false
+    t.boolean "subscribed", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["exchange_id", "code"], name: "index_markets_on_exchange_id_and_code"
+    t.index ["subscribed"], name: "index_markets_on_subscribed"
   end
 
 end
