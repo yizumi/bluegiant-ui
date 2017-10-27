@@ -17,7 +17,6 @@
 
 class Market < ApplicationRecord
   belongs_to :exchange
-  has_many :orders
 
   def self.from_json(exchange, json)
     m = Market.new

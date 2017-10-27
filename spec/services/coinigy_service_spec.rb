@@ -8,9 +8,6 @@ RSpec.describe CoinigyService do
       .to_return(status: 200, body: exchanges_message)
     stub_request(:post, 'https://api.coinigy.com/api/v1/markets')
       .with(body: '{"exchange_code":"BTCE"}').to_return(status: 200, body: markets_message)
-    stub_request(:post, 'https://api.coinigy.com/api/v1/data')
-      .with(body: '{"exchange_code":"BTCE","exchange_market":"BTC/USD","type":"orders"}')
-      .to_return(status: 200, body: orders_message)
   end
   def exchanges_message
     '{"data":[{' \
@@ -34,20 +31,6 @@ RSpec.describe CoinigyService do
     '"exchmkt_id": "7432"' \
     '}]}'
   end
-
-  def orders_message
-    '{"data":{' \
-    '"exch_code": "GDAX",' \
-    '"primary_curr_code": "BTC",' \
-    '"secondary_curr_code": "USD",' \
-    '"type": "orders",' \
-    '"asks": [{' \
-    '"price": "696.8600000000",' \
-    '"quantity": "0.0171218000",' \
-    '"total": "11.9314975480"' \
-    '}]' \
-    '}}'
-  end
   describe '#refresh_exchanges' do
     before { described_class.new.refresh_exchanges }
     let(:exchange) { Exchange.first }
@@ -65,15 +48,6 @@ RSpec.describe CoinigyService do
     it 'should return markets within the given exchange' do
       expect(market.exchange.code).to eq('BTCE')
       expect(market.code).to eq('BTC/USD')
-    end
-  end
-  describe '#refresh_orders' do
-    let(:market) { create(:market) }
-    let(:order) { described_class.new.refresh_orders(market).first }
-    it 'should return orders for the given exchange' do
-      expect(order.ask?).to be_truthy
-      expect(order.price).to eq(696.86)
-      expect(order.quantity).to eq(0.0171218000)
     end
   end
 end

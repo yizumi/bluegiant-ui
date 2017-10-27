@@ -47,13 +47,4 @@ ActiveRecord::Schema.define(version: 20171027091605) do
     t.index ["exchange_id", "code"], name: "index_markets_on_exchange_id_and_code"
   end
 
-  create_table "orders", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.integer "market_id", null: false
-    t.integer "side", null: false
-    t.decimal "price", precision: 19, scale: 10, null: false
-    t.decimal "quantity", precision: 19, scale: 10, null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
 end
