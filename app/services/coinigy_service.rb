@@ -36,12 +36,14 @@ class CoinigyService
     end
   end
 
-  def fetch_orders(_exchange)
-    res = http_post('/api/v1/markets', exchange_code: market.exchange.code,
-                                       exchange_market: market.code,
-                                       type: 'orders')
+  def fetch_orders(market)
+    res = http_post('/api/v1/data', exchange_code: market.exchange.code,
+                                    exchange_market: market.code,
+                                    type: 'orders')
     data = JSON.parse(res.body, symbolize_names: true)[:data]
-    data.map { |o| Order.from_json(market, o) }
+    asks = data[:asks]&.map { |o| Order.from_json(market, :ask, o) }
+    bids = data[:bids]&.map { |o| Order.from_json(market, :bid, o) }
+    (asks || []) + (bids || [])
   end
 
   private

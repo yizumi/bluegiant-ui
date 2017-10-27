@@ -30,13 +30,13 @@ RSpec.describe CoinigyService do
     '"exch_name": "Global Digital Asset Exchange",' \
     '"exch_code": "BTCE",' \
     '"mkt_id": "139",' \
-    '"mkt_name": "BTC/CAD",' \
+    '"mkt_name": "BTC/USD",' \
     '"exchmkt_id": "7432"' \
     '}]}'
   end
 
   def orders_message
-    '{"data":[{' \
+    '{"data":{' \
     '"exch_code": "GDAX",' \
     '"primary_curr_code": "BTC",' \
     '"secondary_curr_code": "USD",' \
@@ -46,7 +46,7 @@ RSpec.describe CoinigyService do
     '"quantity": "0.0171218000",' \
     '"total": "11.9314975480"' \
     '}]' \
-    '}]}'
+    '}}'
   end
   describe '#refresh_exchanges' do
     before { described_class.new.refresh_exchanges }
@@ -64,14 +64,14 @@ RSpec.describe CoinigyService do
     let(:market) { described_class.new.refresh_markets(exchange).first }
     it 'should return markets within the given exchange' do
       expect(market.exchange.code).to eq('BTCE')
-      expect(market.code).to eq('BTC/CAD')
+      expect(market.code).to eq('BTC/USD')
     end
   end
   describe '#refresh_orders' do
     let(:market) { create(:market) }
     let(:order) { described_class.new.refresh_orders(market).first }
-    it 'should return orders for the givne exchange' do
-      expect(order.side).to eq(:ask)
+    it 'should return orders for the given exchange' do
+      expect(order.ask?).to be_truthy
       expect(order.price).to eq(696.86)
       expect(order.quantity).to eq(0.0171218000)
     end

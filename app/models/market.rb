@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: markets
@@ -16,6 +17,7 @@
 
 class Market < ApplicationRecord
   belongs_to :exchange
+  has_many :orders
 
   def self.from_json(exchange, json)
     m = Market.new
