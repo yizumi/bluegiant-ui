@@ -1,5 +1,5 @@
 app = angular.module 'BlueGiantApp'
-app.controller 'RootController', ($scope)->
+app.controller 'RootController', ['$scope', ($scope)->
   
   $scope.CONNECTING = 'connecting'
   $scope.CONNECTED = 'connected'
@@ -87,3 +87,4 @@ app.controller 'RootController', ($scope)->
 
   $scope.socketStatusIs = (status)->
     $scope.socketStatus == status
+]

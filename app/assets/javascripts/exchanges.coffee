@@ -1,5 +1,5 @@
 app = angular.module('BlueGiantApp')
-app.controller 'ExchangesController', ($scope, Market)->
+app.controller 'ExchangesController', ['$scope','Market', ($scope, Market)->
   $scope.init = (data)->
     $scope.markets= $pageData.markets
 
@@ -9,3 +9,4 @@ app.controller 'ExchangesController', ($scope, Market)->
       console.info('success')
     , (error)->
       console.error(error)
+]

@@ -28,9 +28,9 @@ COPY Gemfile* $APP_HOME/
 RUN bundle install --jobs 5 --retry 5 --without development test
 ADD . $APP_HOME
 ENV RAILS_ENV production
+RUN yarn run install-frontend
 RUN bundle exec rake tmp:create
 RUN bundle exec rake assets:precompile
-RUN yarn run install-frontend
 COPY ./.env.production $APP_HOME/
 
 EXPOSE 3000
