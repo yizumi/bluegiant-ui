@@ -1,6 +1,7 @@
 assets_path "assets/public"
 
 group :vendor do
+  asset "popper.js"
   asset "angular", "1.6.6"
   asset "angular-animate", "1.6.6"
   asset "angular-resource", "1.6.6"

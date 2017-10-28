@@ -2,11 +2,21 @@ doctype html
 html
   head
     meta charset="utf-8"
-    title Blue Giant
+    title BlueGiant
     = csrf_meta_tags
     = stylesheet_link_tag 'application', media: 'all'
-    script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"
-    script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"
     = javascript_include_tag 'application'
-    body(ng-app="BlueGiantApp" ng-controller="MainController" ng-init="init()")
-      = yield
+  body(ng-app="BlueGiantApp" ng-controller="MainController" ng-init="init()")
+    nav.navbar.navbar-expand-lg.navbar-light.bg-light
+      a.navbar-brand(href="#")
+        img.d-inline-block.align-top src=asset_path('bootstrap-solid.svg') width="30" height="30"
+        h1 BlueGiant
+      button.navbar-toggler(type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation")
+        .navbar-toggler-icon
+      .collapse.navbar-collapse#navbarNavDropdown
+        ul.navbar-nav
+          li.nav-item.active
+            a.nav-link(href=root_path) Home <span class="sr-only">(current)</span>
+          li.nav-item
+            a.nav-link(href=exchanges_path) Exchanges
+    = yield

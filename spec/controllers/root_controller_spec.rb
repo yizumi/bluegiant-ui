@@ -11,7 +11,7 @@ RSpec.describe RootController, type: :controller do
           get :index
 
           expect(response).to have_http_status(:success)
-          expect(response.body).to have_tag 'h1', 'Blue Giant'
+          expect(response.body).to have_tag 'h1', 'BlueGiant'
         end
       end
     end
