@@ -1,0 +1,10 @@
+.bg-market {
+  font-size: 12pt;
+  &.enabled {
+    .bg-market-code {
+      color: Green;
+    }
+  }
+  .bg-market-code {
+  }
+}

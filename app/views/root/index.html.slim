@@ -24,15 +24,29 @@ javascript:
       .panel.panel-success(ng-if="socketStatusIs(CONNECTED)")
         .panel-heading Blotter
         table.table
-          tr(ng-repeat="summary in blotter")
-            td() {{summary.exchange_code}}
-            td() {{summary.market_code}}
-            td() {{summary.highest_ask_price}}
-            td() {{summary.lowest_ask_price}}
-            td() {{summary.highest_ask_quantity}}
-            td() {{summary.lowest_ask_quantity}}
-            td() {{summary.highest_bid_price}}
-            td() {{summary.lowest_bid_price}}
-            td() {{summary.highest_bid_quantity}}
-            td() {{summary.lowest_bid_quantity}}
-            td() {{summary.timestamp}}
+          thead
+            tr
+              th EXCH
+              th MRK
+              th ASK-HI
+              th ASK-LO
+              th ASK-HI-VOL
+              th ASK-LO-VOL
+              th BID-HI
+              th BID-LO
+              th BID-HI-VOL
+              th BID-LO-VOL
+              th TS
+          tbody
+            tr(ng-repeat="summary in blotter")
+              td() {{summary.exchange_code}}
+              td() {{summary.market_code}}
+              td() {{summary.highest_ask_price}}
+              td() {{summary.lowest_ask_price}}
+              td() {{summary.highest_ask_quantity}}
+              td() {{summary.lowest_ask_quantity}}
+              td() {{summary.highest_bid_price}}
+              td() {{summary.lowest_bid_price}}
+              td() {{summary.highest_bid_quantity}}
+              td() {{summary.lowest_bid_quantity}}
+              td() {{summary.timestamp}}

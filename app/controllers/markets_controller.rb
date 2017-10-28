@@ -27,7 +27,7 @@ class MarketsController < ApplicationController
   private
 
   def market
-    @market ||= Market.find_by(params[:id])
+    @market ||= Market.find(params[:id].to_i)
   end
 
   def update_params

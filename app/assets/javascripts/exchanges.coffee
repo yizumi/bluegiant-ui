@@ -4,11 +4,8 @@ app.controller 'ExchangesController', ($scope, Market)->
     $scope.markets= $pageData.markets
 
   $scope.toggleSubscription = (market)->
-    if market.subscription
-      disableSubscription(market)
-    else
-      enableSubscription(market)
-
-  enableSubscription = (market)->
-    Market.get market, (m)->
-      console.info(m)
+    market.subscribed = !market.subscribed
+    Market.update {id: market.id}, market, (success)->
+      console.info('success')
+    , (error)->
+      console.error(error)
