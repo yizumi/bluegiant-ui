@@ -10,14 +10,12 @@
 #  trade_enabled   :boolean
 #  balance_enabled :boolean
 #  url             :string(255)
-#  subscribed      :boolean          default(FALSE), not null
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
 #
 # Indexes
 #
-#  index_exchanges_on_code        (code)
-#  index_exchanges_on_subscribed  (subscribed)
+#  index_exchanges_on_code  (code)
 #
 
 class Exchange < ApplicationRecord

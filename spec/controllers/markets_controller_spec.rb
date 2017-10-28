@@ -3,10 +3,6 @@
 require 'rails_helper'
 
 RSpec.describe MarketsController, type: :controller do
-  before do
-    stub_request(:post, 'https://api.coinigy.com/api/v1/markets')
-      .with(body: '{"exchange_code":"BTCE"}').to_return(status: 200, body: markets_message)
-  end
   def markets_message
     '{"data":[{' \
     '"exch_id": "62",' \
@@ -18,6 +14,10 @@ RSpec.describe MarketsController, type: :controller do
     '}]}'
   end
   describe '#create' do
+    before do
+      stub_request(:post, 'https://api.coinigy.com/api/v1/markets')
+        .with(body: '{"exchange_code":"BTCE"}').to_return(status: 200, body: markets_message)
+    end
     context 'AS Alex WHEN refreshes the market list for an exchange' do
       let(:exchange) { create(:exchange) }
       it 'THEN should update the market list' do

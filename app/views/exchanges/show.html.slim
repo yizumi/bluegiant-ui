@@ -11,5 +11,8 @@ ul
 Markets
 table.table
   - @exchange.markets.each do |market|
-    tr
+    tr.bg-market(class=('enabled' if market.subscribed?))
       td.bg-market-code =market.code
+      td.bg-market-subscription
+        button()
+          =market.subscribed? ? 'Disable' : 'Enable'
