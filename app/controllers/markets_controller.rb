@@ -15,9 +15,23 @@ class MarketsController < ApplicationController
     render :show
   end
 
+  validates :update do
+    boolean :subscribed, require: true, strong: true, description: 'Flag indicated whether this is subscribed'
+  end
+  def update
+    market.update_attributes(update_params)
+    market.save!
+    render :show
+  end
+
   private
 
   def market
     @market ||= Market.find_by(params[:id])
+  end
+
+  def update_params
+    params = permitted_params
+    params
   end
 end

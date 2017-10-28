@@ -44,4 +44,18 @@ RSpec.describe MarketsController, type: :controller do
       end
     end
   end
+  describe '#update' do
+    context 'AS Alex GIVEN a market WHEN he updates the subscription' do
+      let(:market) { create(:market) }
+      it 'THEN should update the record' do
+        patch :update, params: {
+          id: market.id,
+          format: :json,
+          subscribed: true
+        }
+
+        expect(market.reload.subscribed?).to be_truthy
+      end
+    end
+  end
 end
