@@ -18,6 +18,6 @@ class MarketsController < ApplicationController
   private
 
   def market
-    @market ||= Market.find_by(params[:code])
+    @market ||= Market.find_by(params[:id])
   end
 end
