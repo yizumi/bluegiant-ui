@@ -1,3 +1,14 @@
-# Place all the behaviors and hooks related to the matching controller here.
-# All this logic will automatically be available in application.js.
-# You can use CoffeeScript in this file: http://coffeescript.org/
+app = angular.module('BlueGiantApp')
+app.controller 'ExchangesController', ($scope, Market)->
+  $scope.init = (data)->
+    $scope.markets= $pageData.markets
+
+  $scope.toggleSubscription = (market)->
+    if market.subscription
+      disableSubscription(market)
+    else
+      enableSubscription(market)
+
+  enableSubscription = (market)->
+    Market.get market, (m)->
+      console.info(m)

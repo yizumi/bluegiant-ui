@@ -15,4 +15,5 @@
 //= require angular
 //= require angular-animate
 //= require angular-resource
+//= require socketcluster-client/socketcluster.min
 //= require_tree .

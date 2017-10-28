@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: markets
@@ -24,5 +25,11 @@ class Market < ApplicationRecord
     m.exchange = exchange
     m.code = json[:mkt_name]
     m
+  end
+
+  def as_json(arg)
+    json = super
+    json[:subscription_code] = "ORDER-#{exchange.code}--#{code.gsub('/', '--')}"
+    json
   end
 end

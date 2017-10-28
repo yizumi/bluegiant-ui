@@ -9,4 +9,15 @@ class MarketsController < ApplicationController
   def exchange
     @exchange ||= Exchange.find_by!(code: params[:exchange_id])
   end
+
+  def show
+    not_found if market.nil?
+    render :show
+  end
+
+  private
+
+  def market
+    @market ||= Market.find_by(params[:code])
+  end
 end

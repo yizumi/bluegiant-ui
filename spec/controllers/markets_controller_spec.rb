@@ -30,4 +30,18 @@ RSpec.describe MarketsController, type: :controller do
       end
     end
   end
+  describe '#show' do
+    let(:market) { create(:market) }
+    context 'AS Alex WHEN accesses market description' do
+      render_views
+      it 'THEN should show the description of the market' do
+        get :show, params: { id: market.id, format: :json }
+
+        expect(response).to have_http_status(200)
+
+        json = JSON.parse(response.body)
+        expect(json['code']).to eq(market.code)
+      end
+    end
+  end
 end
