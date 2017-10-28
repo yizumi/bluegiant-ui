@@ -1,1 +1,30 @@
-.container(ng-controller="RootController" ng-init="init()")
+.container.body(ng-controller="RootController" ng-init="init()" style="padding: 0; width: 100%;")
+  .col-md-3.left_col
+    .left_col.scroll-view
+      .navbar.nav_title(style="border: 0;")
+        a.site_title(href=root_path)
+          span BlueGiant
+      .clearfix
+      .profile.clearfix
+      .main_menu_side.hidden-print.main_menu#sidebar-menu
+        .menu_section.active
+          h3 Exchanges
+          ul.nav.side-menu
+            - @exchanges.each do |exchange|
+              li.active
+                a(href="#")
+                  = exchange.name
+                  span.fa.fa-chevron-down
+                ul.nav.child_menu(style="display: block;")
+                  - exchange.markets.each do |market|
+                    li.current-page
+                      a(href="#") =market.code
+            
+      .sidebar-footer.hidden-small
+  .top_nav
+    .nav_menu
+  .right_col(role="main" style="min-height: 1008px;")
+    .
+      .page-title
+        .title_left
+          h3 Blotter <small>Main screen turn on!</small>

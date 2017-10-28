@@ -6,17 +6,5 @@ html
     = csrf_meta_tags
     = stylesheet_link_tag 'application', media: 'all'
     = javascript_include_tag 'application'
-  body(ng-app="BlueGiantApp" ng-controller="MainController" ng-init="init()")
-    nav.navbar.navbar-expand-lg.navbar-light.bg-light
-      a.navbar-brand(href="#")
-        img.d-inline-block.align-top src=asset_path('bootstrap-solid.svg') width="30" height="30"
-        h1 BlueGiant
-      button.navbar-toggler(type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation")
-        .navbar-toggler-icon
-      .collapse.navbar-collapse#navbarNavDropdown
-        ul.navbar-nav
-          li.nav-item.active
-            a.nav-link(href=root_path) Home <span class="sr-only">(current)</span>
-          li.nav-item
-            a.nav-link(href=exchanges_path) Exchanges
+  body.nav-md(ng-app="BlueGiantApp" ng-controller="MainController" ng-init="init()")
     = yield
