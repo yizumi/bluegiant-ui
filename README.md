@@ -33,8 +33,8 @@ $ bin/rspec
 
 To build and test on local environment:
 ```
-$ docker build -t gcr.io/${PROJECT_ID}/bluegiant-ui .
-$ docker run -t --rm -p 3000:3000 gcr.io/${PROJECT_ID}/bluegiant-ui
+$ docker build -t gcr.io/bluegiant-183723/bluegiant-ui .
+$ docker run -t --rm -p 3000:3000 gcr.io/bluegiant-183723/bluegiant-ui
 ```
 
 ```
