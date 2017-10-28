@@ -1,8 +1,9 @@
-=form_tag(exchanges_path, method: :post) do
-  input(type="submit" value="Refresh")
-table.table
-  - @exchanges.each do |exchange|
-    tr.bg-exchange
-      td.bg-exchange-name() #{exchange.name}
-      td.bg-exchange-code()
-        a(href=exchange_path(exchange.code)) #{exchange.code}
+.container
+  =form_tag(exchanges_path, method: :post) do
+    input(type="submit" value="Refresh")
+  table.table
+    - @exchanges.each do |exchange|
+      tr.bg-exchange
+        td.bg-exchange-name() #{exchange.name}
+        td.bg-exchange-code()
+          a(href=exchange_path(exchange.code)) #{exchange.code}

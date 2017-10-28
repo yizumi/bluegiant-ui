@@ -1,2 +1,52 @@
-h1.logo Blue Giant
-p Version 0.0.2
+javascript:
+  var $pageData = {
+    markets: #{{@markets.to_json}}
+  };
+.container(ng-controller="RootController" ng-init="init('#{@api_key}', '#{@api_secret}')" style="width: 100%;")
+  .row
+    .col-md-3
+      .panel.panel-primary
+        .panel-heading Markets (#{@markets.count})
+        table.table
+          - @markets.each do |market|
+            tr.bg-market
+              td.bg-market-exchange-name =market.exchange.name
+              td.bg-market-code =market.code
+          - if @markets.count == 0
+            tr
+              td
+                | No subscriptions found.
+                | You can subscribe <a href="#{exchanges_path}">here</a>.
+    .col-md-9
+      .panel.panel-danger(ng-if="socketStatusIs(ERROR)")
+      .panel.panel-warning(ng-if="socketStatusIs(CONNECTING)")
+        .panel-heading Connecting...
+      .panel.panel-success(ng-if="socketStatusIs(CONNECTED)")
+        .panel-heading Blotter
+        table.table
+          thead
+            tr
+              th EXCH
+              th MRK
+              th ASK-HI
+              th ASK-LO
+              th ASK-HI-VOL
+              th ASK-LO-VOL
+              th BID-HI
+              th BID-LO
+              th BID-HI-VOL
+              th BID-LO-VOL
+              th TS
+          tbody
+            tr(ng-repeat="summary in blotter")
+              td() {{summary.exchange_code}}
+              td() {{summary.market_code}}
+              td() {{summary.highest_ask_price}}
+              td() {{summary.lowest_ask_price}}
+              td() {{summary.highest_ask_quantity}}
+              td() {{summary.lowest_ask_quantity}}
+              td() {{summary.highest_bid_price}}
+              td() {{summary.lowest_bid_price}}
+              td() {{summary.highest_bid_quantity}}
+              td() {{summary.lowest_bid_quantity}}
+              td() {{summary.timestamp}}

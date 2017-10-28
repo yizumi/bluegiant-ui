@@ -30,6 +30,7 @@ ADD . $APP_HOME
 ENV RAILS_ENV production
 RUN bundle exec rake tmp:create
 RUN bundle exec rake assets:precompile
+RUN yarn run install-frontend
 COPY ./.env.production $APP_HOME/
 
 EXPOSE 3000

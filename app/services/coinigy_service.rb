@@ -29,23 +29,6 @@ class CoinigyService
     data.map { |m| Market.from_json(exchange, m) }
   end
 
-  def refresh_orders(market)
-    ActiveRecord::Base.transaction do
-      Order.where(market_id: market.id).delete_all
-      fetch_orders(market).each(&:save!)
-    end
-  end
-
-  def fetch_orders(market)
-    res = http_post('/api/v1/data', exchange_code: market.exchange.code,
-                                    exchange_market: market.code,
-                                    type: 'orders')
-    data = JSON.parse(res.body, symbolize_names: true)[:data]
-    asks = data[:asks]&.map { |o| Order.from_json(market, :ask, o) }
-    bids = data[:bids]&.map { |o| Order.from_json(market, :bid, o) }
-    (asks || []) + (bids || [])
-  end
-
   private
 
   def http_post(url, body = nil)

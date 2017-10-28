@@ -7,22 +7,27 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
+# core
 gem 'mysql2', '>= 0.3.18', '< 0.5'
 gem 'puma', '~> 3.7'
 gem 'rails', '~> 5.1.4'
 gem 'ruby_dep'
-gem 'sass-rails', '~> 5.0'
-gem 'uglifier', '>= 1.3.0'
 
-gem 'coffee-rails', '~> 4.2'
+# system
 gem 'enumerize'
 gem 'httpclient'
 gem 'jbuilder', '~> 2.5'
 gem 'listen', '>= 3.0.5', '< 3.2'
 gem 'sentry-raven'
-gem 'slim-rails'
 gem 'weak_parameters'
 gem 'webmock'
+
+# front-end
+gem 'coffee-rails', '~> 4.2'
+gem 'jquery-rails'
+gem 'sass-rails', '~> 5.0'
+gem 'slim-rails'
+gem 'uglifier', '>= 1.3.0'
 
 group :development, :test do
   gem 'annotate'

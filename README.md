@@ -15,6 +15,12 @@ Things you may want to cover:
 
 ## Database initialization
 
+## Initialize Javascript library
+
+```
+$ yarn install --modules-folder vendor/assets/components
+```
+
 ## How to run the test suite
 
 ```

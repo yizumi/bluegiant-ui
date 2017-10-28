@@ -1,15 +1,21 @@
-p
-  a(href=exchanges_path) All Exchanges
+javascript:
+  $pageData = {
+    markets: #{{@exchange.markets.to_json}}
+  };
+.container(ng-controller="ExchangesController" ng-init="init()")
+  p
+    a(href=exchanges_path) All Exchanges
 
-ul
-  li Code: #{@exchange.code}
-  li Name: #{@exchange.name}
+  ul
+    li Code: #{@exchange.code}
+    li Name: #{@exchange.name}
 
-=form_tag(exchange_markets_path(@exchange.code), method: :post)
-  input(type="submit" value="Refresh")
+  =form_tag(exchange_markets_path(@exchange.code), method: :post)
+    input(type="submit" value="Refresh")
 
-Markets
-table.table
-  - @exchange.markets.each do |market|
-    tr
-      td.bg-market-code =market.code
+  Markets
+  table.table
+    tr.bg-market(ng-repeat="market in markets" ng-class="{'enabled': market.subscribed}" data-id="{{market.id}}")
+      td.bg-market-code() {{market.code}}
+      td.bg-market-subscription
+        button(ng-click="toggleSubscription(market)") {{market.subscribed ? 'Disable' : 'Enable'}}
