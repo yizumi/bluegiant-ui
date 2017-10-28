@@ -31,6 +31,8 @@ jobs:
           name: install dependencies
           command: |
             bundle install --jobs=4 --retry=3 --path vendor/bundle
+      - run: npm install bower -g
+      - run: bundle exec rake bower:install
 
       - save_cache:
           paths:
@@ -44,7 +46,6 @@ jobs:
         
       - run: bundle exec rake db:create
       - run: bundle exec rake db:schema:load
-      - run: bundle exec rake bower:install
 
       # run tests!
       - run:
