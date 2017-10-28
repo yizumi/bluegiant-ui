@@ -12,4 +12,7 @@
 //= require jquery
 //= require bootstrap
 //= require rails-ujs
+//= require angular
+//= require angular-animate
+//= require angular-resource
 //= require_tree .
