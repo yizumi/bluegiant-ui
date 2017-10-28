@@ -1,0 +1,13 @@
+{
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "install-frontend": "yarn install --modules-folder ./vendor/assets/components/"
+  },
+  "dependencies": {
+    "URIjs": "^1.16.1",
+    "angular": "^1.6.6",
+    "angular-animate": "^1.6.6",
+    "angular-resource": "^1.6.6",
+    "popper.js": "^1.12.6"
+  }
+}
