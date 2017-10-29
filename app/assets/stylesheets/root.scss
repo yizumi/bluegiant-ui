@@ -4,3 +4,24 @@ h1.logo {
   background-size: 32px 32px;
   background-repeat: no-repeat;
 }
+
+.bg-blotter {
+  background: #333;
+  color: #fff;
+  .ordered {
+     &:before {
+       content: "\25B4";
+     }
+     &.reversed {
+       &:before {
+         content: "\25BE";
+       }
+     }
+  }
+  .bg-number {
+    text-align: right;
+  }
+  th > a {
+    cursor: pointer;
+  }
+}

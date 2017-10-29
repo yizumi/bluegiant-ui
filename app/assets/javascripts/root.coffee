@@ -1,17 +1,19 @@
 app = angular.module 'BlueGiantApp'
-app.controller 'RootController', ['$scope', ($scope)->
+app.controller 'RootController', ['$scope', '$interval', ($scope, $interval)->
   
   $scope.CONNECTING = 'connecting'
   $scope.CONNECTED = 'connected'
   $scope.ERROR = 'error'
 
   $scope.init = (apiKey, apiSecret)->
+    $scope.socket = null
     $scope.socketStatus = $scope.CONNECTING
     $scope.config = { apiKey: apiKey, apiSecret: apiSecret }
     $scope.blotter = {}
+    $scope.blotterOrderKey = 'market_code'
+    $scope.blotterReversed = false
+    $interval updateBlotterCurrentTime, 5000
     socketInit()
-
-  socket = null
 
   socketOptions = ()->
     {
@@ -22,16 +24,16 @@ app.controller 'RootController', ['$scope', ($scope)->
 
   socketCredentials = ()->
     $scope.config
-  
+ 
   socketInit = ()->
-    socket = socketCluster.connect(socketOptions())
-    socket.on 'connect', socketConnected
-    socket.on 'error', (err)->
+    $scope.socket = socketCluster.connect(socketOptions())
+    $scope.socket.on 'connect', socketConnected
+    $scope.socket.on 'error', (err)->
       console.error(err)
 
   socketConnected = (status)->
     console.log('Connected')
-    socket.emit 'auth', socketCredentials(), socketAuthenticated
+    $scope.socket.emit 'auth', socketCredentials(), socketAuthenticated
 
   socketAuthenticated = (err, token)->
     if !err && token
@@ -44,34 +46,38 @@ app.controller 'RootController', ['$scope', ($scope)->
       $scope.socketError = 'Authentication failed'
 
   socketSubscribe = (code)->
-    ch = socket.subscribe(code)
+    ch = $scope.socket.subscribe(code)
     ch.watch (data)->
       summary = buildMarketSummary(data)
-      return if summary is undefined
+      return if summary is null
       $scope.blotter[code] = summary
       $scope.$apply()
     console.info("Subscribed to #{code}")
   
   buildMarketSummary = (orders)->
     first = orders[0]
-    return if first.exchange is undefined or first.label is undefined
+    return null if first.exchange is undefined or first.label is undefined
     summary = buildEmptySummary(first)
-    for order in orders
-      continue if order is null
-      if order.ordertype is 'Buy' # Ask
-        summary.highest_ask_price = Math.max(summary.highest_ask_price, order.price)
-        summary.lowest_ask_price = Math.min(summary.lowest_ask_price, order.price)
-        summary.highest_ask_quantity = order.quantity if summary.highest_ask_price is order.price
-        summary.lowest_ask_quantity = order.quantity if summary.lowest_ask_price is order.price
-      if order.ordertype is 'Sell' # Bid
-        summary.highest_bid_price = Math.max(summary.highest_bid_price, order.price)
-        summary.lowest_bid_price = Math.min(summary.lowest_bid_price, order.price)
-        summary.highest_bid_quantity = order.quantity if summary.highest_bid_price is order.price
-        summary.lowest_bid_quantity = order.quantity if summary.lowest_bid_price is order.price
+    orders.forEach (o)->refreshSummary(summary, o)
     summary
+
+  refreshSummary = (s, o)->
+    return null if o is null
+    if o.ordertype is 'Buy' # Ask
+      s.highest_ask_price = Math.max(s.highest_ask_price, o.price)
+      s.lowest_ask_price = Math.min(s.lowest_ask_price, o.price)
+      s.highest_ask_quantity = o.quantity if s.highest_ask_price is o.price
+      s.lowest_ask_quantity = o.quantity if s.lowest_ask_price is o.price
+    if o.ordertype is 'Sell' # Bid
+      s.highest_bid_price = Math.max(s.highest_bid_price, o.price)
+      s.lowest_bid_price = Math.min(s.lowest_bid_price, o.price)
+      s.highest_bid_quantity = o.quantity if s.highest_bid_price is o.price
+      s.lowest_bid_quantity = o.quantity if s.lowest_bid_price is o.price
+    s.timestamp = new Date(Math.max(new Date(o.timestamp), s.timestamp))
 
   buildEmptySummary = (first)->
     {
+      id: "#{first.exchange}--#{first.label}"
       exchange_code: first.exchange
       market_code: first.label
       highest_ask_price: Number.MIN_VALUE
@@ -82,9 +88,18 @@ app.controller 'RootController', ['$scope', ($scope)->
       lowest_bid_price: Number.MAX_VALUE
       highest_bid_quantity: 0
       lowest_bid_quantity: 0
-      timestamp: first.timestamp
+      currentTime: new Date()
+      timestamp: new Date("#{first.timestamp} GMT")
     }
 
   $scope.socketStatusIs = (status)->
     $scope.socketStatus == status
+
+  updateBlotterCurrentTime = ()->
+    date = new Date()
+    $scope.blotter.forEachKeyValue (k, v)->v.currentTime = date
+
+  $scope.changeOrder = (field)->
+    $scope.blotterReversed = !$scope.blotterReversed if $scope.blotterOrderKey == field
+    $scope.blotterOrderKey = field
 ]
