@@ -1,3 +1,49 @@
+body {
+  background: #666;
+}
+
+.table {
+}
+
+.panel-primary {
+  border-color: #6d747d;
+  > .panel-heading {
+    background-color: #34344e;
+    color: White;
+    border-color: inherit;
+  }
+}
+.panel-success {
+  border-color: #747d6d;
+  > .panel-heading {
+    background-color: #344e34;
+    color: White;
+    border-color: inherit;
+  }
+}
+.panel {
+  .table {
+    background: #333;
+    color: White;
+    font-size: 9pt;
+    font-family: monospace;
+    > thead {
+      > tr {
+        > th {
+          border-color: #666;
+        }
+      }
+    }
+    > tbody {
+      > tr {
+        > td {
+          border-color: #666;
+        }
+      }
+    }
+  }
+}
+
 .navbar {
   .navbar-brand {
     h1 {
