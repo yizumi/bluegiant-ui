@@ -21,35 +21,33 @@ javascript:
       .panel(ng-class="{'panel-danger':socketStatusIs(ERROR),
                         'panel-warning':socketStatusIs(CONNECTING),
                         'panel-success':socketStatusIs(CONNECTED)}")
-        .panel-heading(ng-switch="socketStatus") Market Monitor
+        .panel-heading(ng-switch="socketStatus")
+          .row
+            .col-md-9(style="font-size: 16pt;") Market Monitor
+            .col-md-3
+              select.form-control(
+                ng-model="currencyPair"
+                ng-options="pair for pair in currencyPairs()"
+                ng-change="onCurrencyPairChange()")
+                option(value="") -- Choose a currency pair --
         table.table.bg-blotter
           thead
             tr
-              th(ng-class="{'ordered':blotterOrderKey == 'market_code','reversed':blotterReversed}")
-                a(ng-click="changeOrder('market_code')") MRK
-              th(ng-class="{'ordered':blotterOrderKey == 'exchange_code','reversed':blotterReversed}")
-                a(ng-click="changeOrder('exchange_code')") EXCH
-              th.bg-number ASK-LO-VOL
-              th.bg-number ASK-HI-VOL
-              th.bg-number ASK-LO
-              th.bg-number ASK-HI
-              th.bg-number MIN-SPREAD
-              th.bg-number BID-LO
-              th.bg-number BID-HI
-              th.bg-number BID-LO-VOL
-              th.bg-number BID-HI-VOL
-              th.bg-number TS
+              th Bid Exch
+              th Ask Exch
+              th.bg-number Spread (bps)
+              th.bg-number Spread 
+              th.bg-number Bid Price ({{currencyPair.split('/')[1]}})
+              th.bg-number Ask Price ({{currencyPair.split('/')[1]}})
+              th.bg-number Mid Price ({{currencyPair.split('/')[1]}})
           tbody
-            tr(ng-repeat="summary in blotter | orderHashBy:blotterOrderKey:blotterReversed track by summary.id")
-              td() {{summary.market_code}}
-              td() {{summary.exchange_code}}
-              td.bg-number() {{summary.lowest_ask_quantity | number:8}}
-              td.bg-number() {{summary.highest_ask_quantity | number:8}}
-              td.bg-number() {{summary.lowest_ask_price | number:8}}
-              td.bg-number() {{summary.highest_ask_price | number:8}}
-              td.bg-number() {{summary.lowest_bid_price - summary.highest_ask_price | number:8}}
-              td.bg-number() {{summary.lowest_bid_price | number:8}}
-              td.bg-number() {{summary.highest_bid_price | number:8}}
-              td.bg-number() {{summary.lowest_bid_quantity | number:8}}
-              td.bg-number() {{summary.highest_bid_quantit | number:8}}
-              td.bg-number() {{summary.timestamp | elapsedTime:summary.currentTime}}
+            tr(
+              ng-class="{'highlight':recent(spread)}"
+              ng-repeat="spread in report.data track by keyOf(spread)")
+              td() {{spread.bid_exchange}}
+              td() {{spread.ask_exchange}}
+              td.bg-number() {{spread.spread_bp | number:8}}
+              td.bg-number() {{spread.spread | number:8}}
+              td.bg-number() {{spread.bid_lo_price | number:8}}
+              td.bg-number() {{spread.ask_hi_price | number:8}}
+              td.bg-number() {{spread.mid_price | number:8}}

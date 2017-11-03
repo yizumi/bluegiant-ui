@@ -34,7 +34,7 @@ app.filter 'elapsedTime', ()->
     {key: 'second', value: 1}
   ]
   (date, since)->
-    seconds = Math.floor((since - date) / 1000)
+    seconds = Math.floor(((since||new Date()) - date) / 1000)
     return "< 5 seconds" if seconds <= 5 
     counter = 0
     for intv in intervals
