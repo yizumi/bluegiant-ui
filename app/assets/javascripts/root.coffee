@@ -20,8 +20,7 @@ app.controller 'RootController', ['$scope', '$interval', ($scope, $interval)->
     $scope.config
  
   socketInit = ()->
-    # $scope.socket = new WebSocket("ws://104.198.124.78:8080/echo")
-    $scope.socket = new WebSocket("ws://localhost:8080/echo")
+    $scope.socket = new WebSocket("ws://104.198.124.78:8080/echo")
     $scope.socket.onconnect = socketConnected
     $scope.socket.onmessage = socketOnMessage
   
