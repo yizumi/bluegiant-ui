@@ -1,7 +1,7 @@
 app = angular.module 'BlueGiantApp'
 app.service 'MarketData', ['$websocket', ($websocket)->
-  # ws = $websocket('ws://104.198.124.78.8080/echo')
-  ws = $websocket('ws://localhost:8080/echo')
+  ws = $websocket('ws://104.198.124.78.8080/echo')
+  # ws = $websocket('ws://localhost:8080/echo')
   blotters = {}
   currencyPairs = []
 
