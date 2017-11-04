@@ -16,4 +16,5 @@
 //= require angular-animate
 //= require angular-resource
 //= require socketcluster-client/socketcluster.min
+//= require angular-websocket/dist/angular-websocket.min
 //= require_tree .
