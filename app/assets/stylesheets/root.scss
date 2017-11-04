@@ -32,4 +32,14 @@ h1.logo {
   .highlight {
     animation: hl-animate 2s linear;
   }
+  .sortable {
+    cursor: pointer;
+  }
+}
+
+.panel-warning > .panel-heading {
+  &.dark {
+    background: #ccc;
+    color: Black;
+  }
 }

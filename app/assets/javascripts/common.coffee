@@ -1,8 +1,4 @@
-Object.prototype.forEachKeyValue = (f)->
-  self = this
-  Object.keys(self).forEach (key)->f(key, self[key])
-
-app = angular.module 'BlueGiantApp', ['ngResource', 'ngAnimate']
+app = angular.module 'BlueGiantApp', ['ngResource', 'ngAnimate', 'angular-websocket']
 app.config ['$httpProvider', ($httpProvider)->
   csrfToken = $('meta[name=csrf-token]').attr('content')
   $httpProvider.defaults.headers.common['X-CSRF-Token'] = csrfToken

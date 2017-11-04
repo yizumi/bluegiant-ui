@@ -1,53 +1,57 @@
 javascript:
   var $pageData = {
-    markets: #{{@markets.to_json}}
+    markets: #{{@markets.to_json(include: :exchange)}}
   };
-.container(ng-controller="RootController" ng-init="init('#{@api_key}', '#{@api_secret}')" style="width: 100%;")
+.container(ng-controller="RootController" ng-init="init()" style="width: 100%;")
   .row
-    .col-md-3
-      .panel.panel-primary
-        .panel-heading Markets (#{@markets.count})
-        table.table
-          - @markets.each do |market|
-            tr.bg-market
-              td.bg-market-exchange-name =market.exchange.name
-              td.bg-market-code =market.code
-          - if @markets.count == 0
-            tr
-              td
-                | No subscriptions found.
-                | You can subscribe <a href="#{exchanges_path}">here</a>.
-    .col-md-9
+    .col-md-12
       .panel(ng-class="{'panel-danger':socketStatusIs(ERROR),
                         'panel-warning':socketStatusIs(CONNECTING),
                         'panel-success':socketStatusIs(CONNECTED)}")
-        .panel-heading(ng-switch="socketStatus")
+        .panel-heading.dark(ng-switch="socketStatus")
           .row
             .col-md-9(style="font-size: 16pt;") Market Monitor
             .col-md-3
               select.form-control(
                 ng-model="currencyPair"
-                ng-options="pair for pair in currencyPairs()"
+                ng-options="pair for pair in MarketData.currencyPairs"
                 ng-change="onCurrencyPairChange()")
                 option(value="") -- Choose a currency pair --
-        table.table.bg-blotter
+        table.table.bg-blotter(ng-if="currencyPair")
           thead
             tr
-              th Bid Exch
-              th Ask Exch
-              th.bg-number Spread (bps)
-              th.bg-number Spread 
+              th Currency
+              th.sortable(ng-click="changeOrder('bid_exchange')"
+                          ng-class="{'ordered':(blotterOrderKey=='bid_exchange'),'reversed':blotterReversed}")
+                | Bid Exch
+              th.sortable(ng-click="changeOrder('ask_exchange')"
+                          ng-class="{'ordered':(blotterOrderKey=='ask_exchange'),'reversed':blotterReversed}")
+                | Ask Exch
+              th.sortable.bg-number(ng-click="changeOrder('spread_bp')"
+                                    ng-class="{'ordered':(blotterOrderKey=='spread_bp'),'reversed':blotterReversed}")
+                | Spread (bps)
+              th.sortable.bg-number(ng-click="changeOrder('spread')"
+                                    ng-class="{'ordered':(blotterOrderKey=='spread'),'reversed':blotterReversed}")
+                | Spread 
               th.bg-number Bid Price ({{currencyPair.split('/')[1]}})
               th.bg-number Ask Price ({{currencyPair.split('/')[1]}})
               th.bg-number Mid Price ({{currencyPair.split('/')[1]}})
           tbody
             tr(
-              ng-class="{'highlight':recent(spread)}"
-              ng-repeat="spread in report.data track by keyOf(spread)")
-              td() {{spread.bid_exchange}}
-              td() {{spread.ask_exchange}}
-              td.bg-number() {{spread.spread_bp | number:8}}
-              td.bg-number() {{spread.spread | number:8}}
-              td.bg-number() {{spread.bid_lo_price | number:8}}
-              td.bg-number() {{spread.ask_hi_price | number:8}}
-              td.bg-number() {{spread.mid_price | number:8}}
+              ng-repeat="v in MarketData.blotters[currencyPair] | filter:{id:currencyPair} | orderBy:blotterOrderKey:blotterReversed | limitTo:20 track by v.id"
+              ng-class="{'highlight':recent(v)}" data-key="{{v.id}}")
+              td() {{$index + 1}} {{v.id}}
+              td()
+                a(href="{{exchangeUrl(v.bid_exchange)}}" target="_blank") {{v.bid_exchange}}
+              td()
+                a(href="{{exchangeUrl(v.ask_exchange)}}" target="_blank") {{v.ask_exchange}}
+              td.bg-number() {{v.spread_bp | number:8}}
+              td.bg-number() {{v.spread | number:8}}
+              td.bg-number() {{v.bid_hi_price | number:8}}
+              td.bg-number() {{v.ask_lo_price | number:8}}
+              td.bg-number() {{v.mid_price | number:8}}
+        .panel-body(ng-if="!currencyPair")
+          | Choose a currency pair ({{MarketData.currencyPairs.length}})
+          ul
+            li(ng-repeat="v in MarketData.currencyPairs")
+              a(ng-click="changeCurrencyPair(v)" href="#") {{v}}
