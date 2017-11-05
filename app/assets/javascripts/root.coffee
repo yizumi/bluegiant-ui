@@ -1,6 +1,7 @@
 app = angular.module 'BlueGiantApp'
 app.service 'MarketData', ['$websocket', ($websocket)->
-  ws = $websocket('ws://104.198.124.78:8080/echo')
+  hostname = if document.location.hostname is 'localhost' then 'localhost' else '104.198.124.78'
+  ws = $websocket("ws://#{hostname}:8080/echo")
   blotters = {}
   currencyPairs = []
 
