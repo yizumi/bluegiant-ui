@@ -45,11 +45,11 @@ javascript:
                 a(href="{{exchangeUrl(v.bid_exchange)}}" target="_blank") {{v.bid_exchange}}
               td()
                 a(href="{{exchangeUrl(v.ask_exchange)}}" target="_blank") {{v.ask_exchange}}
-              td.bg-number() {{v.spread_bp | number:8}}
-              td.bg-number() {{v.spread | number:8}}
-              td.bg-number() {{v.bid_hi_price | number:8}}
-              td.bg-number() {{v.ask_lo_price | number:8}}
-              td.bg-number() {{v.mid_price | number:8}}
+              td.bg-number.swap-animation(ng-animate-swap="v.spread_bp") {{v.spread_bp | number:8}}
+              td.bg-number.swap-animation(ng-animate-swap="v.spread") {{v.spread | number:8}}
+              td.bg-number.swap-animation(ng-animate-swap="v.bid_hi_price") {{v.bid_hi_price | number:8}}
+              td.bg-number.swap-animation(ng-animate-swap="v.ask_lo_price") {{v.ask_lo_price | number:8}}
+              td.bg-number.swap-animation(ng-animate-swap="v.mid_price") {{v.mid_price | number:8}}
         .panel-body(ng-if="!currencyPair")
           | Choose a currency pair ({{MarketData.currencyPairs.length}})
           ul

@@ -10,6 +10,7 @@ h1.logo {
   100% {background-color: rgba(255, 30, 30, 0); }
 }
 
+
 .bg-blotter {
   background: #333;
   color: #fff;
@@ -25,16 +26,32 @@ h1.logo {
   }
   .bg-number {
     text-align: right;
+    &.swap-animation {
+      &.ng-enter, .ng-leave {
+        transition: 2.0s linear;
+      }
+      &.ng-enter {
+        background-color: Red;
+        &.ng-enter-active {
+          background-color: #333;
+        }
+      }
+    }
   }
   th > a {
     cursor: pointer;
   }
-  .highlight {
-    animation: hl-animate 2s linear;
-  }
+  
+  // .highlight {
+  //   animation: hl-animate 2s linear;
+  // }
   .sortable {
     cursor: pointer;
   }
+}
+
+.panel .table.bg-blotter > tbody > tr > td {
+  padding: 2px;
 }
 
 .panel-warning > .panel-heading {
