@@ -1,6 +1,7 @@
+hostname = if document.location.hostname is 'localhost' then 'localhost' else '104.198.124.78'
+
 app = angular.module 'BlueGiantApp'
 app.service 'MarketData', ['$websocket', ($websocket)->
-  hostname = if document.location.hostname is 'localhost' then 'localhost' else '104.198.124.78'
   ws = $websocket("ws://#{hostname}:8080/echo")
   blotters = {}
   currencyPairs = []
@@ -17,14 +18,17 @@ app.service 'MarketData', ['$websocket', ($websocket)->
   updateMarketData = (message)->
     message.data.forEach (d)->
       d.id = "#{message.currency_pair}--#{d.bid_exchange}--#{d.ask_exchange}"
+      consumer.onMarketData(d) if consumer.onMarketData
     blotters[message.currency_pair] = message.data
 
-  {
+  consumer = {
     blotters: blotters
     currencyPairs: currencyPairs
   }
+  
+  consumer
 ]
-app.controller 'RootController', ['$scope', '$interval', 'MarketData', ($scope, $interval, MarketData)->
+app.controller 'RootController', ['$scope', '$timeout', 'MarketData', '$http', ($scope, $timeout, MarketData, $http)->
   $scope.MarketData = MarketData 
   $scope.CONNECTING = 'connecting'
   $scope.CONNECTED = 'connected'
@@ -41,6 +45,16 @@ app.controller 'RootController', ['$scope', '$interval', 'MarketData', ($scope, 
     $scope.socketStatus = $scope.CONNECTING
     $scope.blotterOrderKey = 'spread_bp'
     $scope.blotterReversed = true
+    $scope.selectedPairId = null
+    $scope.lastPair = {}
+    $scope.bids = []
+    $scope.asks = []
+
+  MarketData.onMarketData = (pair)->
+    return unless pair.id == $scope.selectedPairId
+    return if $scope.lastPair.spread_bp == pair.spread_bp
+    $scope.lastPair = pair
+    refreshOrders()
 
   $scope.socketStatusIs = (status)->
     $scope.socketStatus == status
@@ -59,4 +73,24 @@ app.controller 'RootController', ['$scope', '$interval', 'MarketData', ($scope, 
 
   $scope.exchangeUrl = (code)->
     exchangeUrls[code]
+
+  $scope.selectPair = (pairId)->
+    $scope.bids = []
+    $scope.asks = []
+    $scope.selectedPairId = pairId
+    refreshOrders()
+
+  refreshOrders = ()->
+    match = $scope.selectedPairId.match(/(\w+)\/(\w+)--(\w+)--(\w+)/)
+    return unless match
+    bid = match[3]
+    ask = match[4]
+    ccy1 = match[1]
+    ccy2 = match[2]
+    $timeout ()->
+      $http.get("http://#{hostname}:8080/exchanges/#{bid}/#{ccy1}-#{ccy2}/orders").then (res)->
+        $scope.bids = res.data.filter (p)->p.ordertype=='Buy'
+      $http.get("http://#{hostname}:8080/exchanges/#{ask}/#{ccy1}-#{ccy2}/orders").then (res)->
+        $scope.asks = res.data.filter (p)->p.ordertype=='Sell'
+    , 500
 ]
