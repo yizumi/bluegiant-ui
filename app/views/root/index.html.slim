@@ -4,7 +4,7 @@ javascript:
   };
 .container(ng-controller="RootController" ng-init="init()" style="width: 100%;")
   .row
-    .col-md-12
+    .col-md-9
       .panel(ng-class="{'panel-danger':socketStatusIs(ERROR),
                         'panel-warning':socketStatusIs(CONNECTING),
                         'panel-success':socketStatusIs(CONNECTED)}")
@@ -17,62 +17,62 @@ javascript:
                 ng-options="pair for pair in MarketData.currencyPairs"
                 ng-change="onCurrencyPairChange()")
                 option(value="") -- Choose a currency pair --
-        .container.bg-blotter(ng-if="currencyPair")
-          .row
-            .col-md-2 Currency
-            .col-md-1.sortable(ng-click="changeOrder('bid_exchange')"
-                               ng-class="{'ordered':(blotterOrderKey=='bid_exchange'),'reversed':blotterReversed}")
+        table.table.bg-blotter(ng-if="currencyPair")
+          tr
+            td.sortable(ng-click="changeOrder('id')"
+                        ng-class="{'ordered':(blotterOrderKey=='id'),'reversed':blotterReversed}")
+              | Currency 
+            td.sortable(ng-click="changeOrder('bid_exchange')"
+                        ng-class="{'ordered':(blotterOrderKey=='bid_exchange'),'reversed':blotterReversed}")
               | Bid Exch
-            .col-md-1.sortable(ng-click="changeOrder('ask_exchange')"
-                               ng-class="{'ordered':(blotterOrderKey=='ask_exchange'),'reversed':blotterReversed}")
+            td.sortable(ng-click="changeOrder('ask_exchange')"
+                        ng-class="{'ordered':(blotterOrderKey=='ask_exchange'),'reversed':blotterReversed}")
               | Ask Exch
-            .col-md-1.sortable.bg-number(ng-click="changeOrder('spread_bp')"
-                                         ng-class="{'ordered':(blotterOrderKey=='spread_bp'),'reversed':blotterReversed}")
+            td.sortable.bg-number(ng-click="changeOrder('spread_bp')"
+                                  ng-class="{'ordered':(blotterOrderKey=='spread_bp'),'reversed':blotterReversed}")
               | Spread (bps)
-            .col-md-1.sortable.bg-number(ng-click="changeOrder('spread')"
-                                         ng-class="{'ordered':(blotterOrderKey=='spread'),'reversed':blotterReversed}")
+            td.sortable.bg-number(ng-click="changeOrder('spread')"
+                                  ng-class="{'ordered':(blotterOrderKey=='spread'),'reversed':blotterReversed}")
               | Spread 
-            .col-md-2.bg-number Bid Price ({{currencyPair.split('/')[1]}})
-            .col-md-2.bg-number Ask Price ({{currencyPair.split('/')[1]}})
-            .col-md-2.bg-number Mid Price ({{currencyPair.split('/')[1]}})
-          .row(
-              ng-repeat="v in MarketData.blotters[currencyPair] | filter:{id:currencyPair} | orderBy:blotterOrderKey:blotterReversed | limitTo:20 track by v.id"
-              ng-class="{'highlight':recent(v)}" data-key="{{v.id}}")
-            .row(ng-click="selectPair(v.id)")
-              .col-md-2() {{$index + 1}} {{v.id}}
-              .col-md-1
-                a(href="{{exchangeUrl(v.bid_exchange)}}" target="_blank") {{v.bid_exchange}}
-              .col-md-1
-                a(href="{{exchangeUrl(v.ask_exchange)}}" target="_blank") {{v.ask_exchange}}
-              .col-md-1.bg-number.swap-animation(ng-animate-swap="v.spread_bp") {{v.spread_bp | number:8}}
-              .col-md-1.bg-number.swap-animation(ng-animate-swap="v.spread") {{v.spread | number:8}}
-              .col-md-2.bg-number.swap-animation(ng-animate-swap="v.bid_hi_price") {{v.bid_hi_price | number:8}}
-              .col-md-2.bg-number.swap-animation(ng-animate-swap="v.ask_lo_price") {{v.ask_lo_price | number:8}}
-              .col-md-2.bg-number.swap-animation(ng-animate-swap="v.mid_price") {{v.mid_price | number:8}}
-            .row(ng-if="selectedPairId == v.id && !(bids.length > 0 && asks.length > 0)")
-              .col-md-12
-                | Loading...
-            .row(ng-if="selectedPairId == v.id && (bids.length > 0 && asks.length > 0)")
-              .col-md-6
-                .row
-                  .col-md-2
-                  .col-md-5 Price
-                  .col-md-5 Quantity
-                .row(ng-repeat="bid in bids | orderBy:'-price' track by $index")
-                  .col-md-2
-                  .col-md-5() {{bid.price}}
-                  .col-md-5() {{bid.quantity}}
-              .col-md-6
-                .row
-                  .col-md-2
-                  .col-md-5 Price
-                  .col-md-5 Quantity
-                .row(ng-repeat="ask in asks | orderBy:'price' track by $index")
-                  .col-md-2
-                  .col-md-5() {{ask.price}}
-                  .col-md-5() {{ask.quantity}}
+            td.bg-number Bid Price ({{currencyPair.split('/')[1]}})
+            td.bg-number Ask Price ({{currencyPair.split('/')[1]}})
+            td.bg-number Mid Price ({{currencyPair.split('/')[1]}})
+          tr(ng-repeat="v in MarketData.blotters[currencyPair] | filter:{id:currencyPair} | orderBy:blotterOrderKey:blotterReversed | limitTo:20 track by v.id"
+                 ng-class="{'highlight':(selectedPairId == v.id)}" data-key="{{v.id}}"
+                 ng-click="selectPair(v.id)")
+            td.col-md-2() {{$index + 1}} {{v.id}}
+            td.col-md-1
+              a(href="{{exchangeUrl(v.bid_exchange)}}" target="_blank") {{v.bid_exchange}}
+            td.col-md-1
+              a(href="{{exchangeUrl(v.ask_exchange)}}" target="_blank") {{v.ask_exchange}}
+            td.col-md-1.bg-number.swap-animation(ng-animate-swap="v.spread_bp") {{v.spread_bp | number:8}}
+            td.col-md-1.bg-number.swap-animation(ng-animate-swap="v.spread") {{v.spread | number:8}}
+            td.col-md-2.bg-number.swap-animation(ng-animate-swap="v.bid_hi_price") {{v.bid_hi_price | number:8}}
+            td.col-md-2.bg-number.swap-animation(ng-animate-swap="v.ask_lo_price") {{v.ask_lo_price | number:8}}
+            td.col-md-2.bg-number.swap-animation(ng-animate-swap="v.mid_price") {{v.mid_price | number:8}}
         .panel-body(ng-if="!currencyPair")
           | Choose a currency pair ({{MarketData.currencyPairs.length}})
           ul
             li(ng-repeat="v in MarketData.currencyPairs")
               a(ng-click="changeCurrencyPair(v)" href="#") {{v}}
+    .col-md-3(ng-if="selectedPairId")
+      .panel
+        .panel-heading.dark
+          | Orders ({{selectedPairId}})
+        .row
+          .col-md-6
+            table.table.bg-blotter
+              tr
+                th Price
+                th Quantity
+              tr(ng-repeat="bid in bids | orderBy:'-price' track by $index")
+                td.bg-number() {{bid.price | number:8}}
+                td.bg-number() {{bid.quantity | number:8}}
+          .col-md-6
+            table.table.bg-blotter
+              tr
+                th Price
+                th Quantity
+              tr(ng-repeat="ask in asks | orderBy:'price' track by $index")
+                td.bg-number() {{ask.price | number:8}}
+                td.bg-number() {{ask.quantity | number:8}}
