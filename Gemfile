@@ -29,6 +29,9 @@ gem 'sass-rails', '~> 5.0'
 gem 'slim-rails'
 gem 'uglifier', '>= 1.3.0'
 
+# jobs
+gem 'delayed_job_active_record'
+
 # others
 gem 'aasm'
 
