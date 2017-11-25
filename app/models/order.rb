@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: orders
@@ -24,4 +26,8 @@
 
 class Order < ApplicationRecord
   belongs_to :market
+
+  enum side: { buy: 1, sell: 2 }
+  enum price_type: { limit: 3, stop_limit: 6, limit_margin: 8, stop_limit_margin: 9 }
+  enum status: { requested: 1, submitted: 2, executed: 3 }
 end
