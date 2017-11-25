@@ -21,6 +21,7 @@ gem 'listen', '>= 3.0.5', '< 3.2'
 gem 'sentry-raven'
 gem 'weak_parameters'
 gem 'webmock'
+gem 'faraday'
 
 # front-end
 gem 'coffee-rails', '~> 4.2'
@@ -31,6 +32,7 @@ gem 'uglifier', '>= 1.3.0'
 
 # jobs
 gem 'delayed_job_active_record'
+gem 'scheduled_job'
 
 # others
 gem 'aasm'

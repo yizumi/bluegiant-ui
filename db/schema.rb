@@ -54,6 +54,7 @@ ActiveRecord::Schema.define(version: 20171125125810) do
     t.string "uuid", null: false
     t.string "external_order_id"
     t.integer "status", null: false
+    t.integer "time_in_force", null: false
     t.integer "side", null: false
     t.integer "price_type", null: false
     t.decimal "price", precision: 15, scale: 10, null: false

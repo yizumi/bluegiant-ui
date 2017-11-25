@@ -1,5 +1,4 @@
 # frozen_string_literal: true
-
 # == Schema Information
 #
 # Table name: orders
@@ -9,6 +8,7 @@
 #  uuid               :string(255)      not null
 #  external_order_id  :string(255)
 #  status             :integer          not null
+#  time_in_force      :integer          not null
 #  side               :integer          not null
 #  price_type         :integer          not null
 #  price              :decimal(15, 10)  not null
@@ -26,5 +26,14 @@
 
 FactoryBot.define do
   factory :order do
+    association :market, factory: :market
+    uuid SecureRandom.uuid
+    status :requested
+    time_in_force :good_till_cancel
+    side :buy
+    price_type :limit_order
+    price 0.1
+    quantity 1.0
+    remaining_quantity 0.0
   end
 end

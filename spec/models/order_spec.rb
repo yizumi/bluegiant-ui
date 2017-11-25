@@ -1,5 +1,4 @@
 # frozen_string_literal: true
-
 # == Schema Information
 #
 # Table name: orders
@@ -9,6 +8,7 @@
 #  uuid               :string(255)      not null
 #  external_order_id  :string(255)
 #  status             :integer          not null
+#  time_in_force      :integer          not null
 #  side               :integer          not null
 #  price_type         :integer          not null
 #  price              :decimal(15, 10)  not null
