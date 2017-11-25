@@ -19,6 +19,9 @@ module BluegiantUi
                        request_specs: false
       g.fixture_replacement :factory_bot, dir: 'spec/factories'
     end
+
+    # delayed_job
+    config.active_job.queue_adapter = :delayed_job
   end
 end
 

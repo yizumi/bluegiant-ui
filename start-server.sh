@@ -7,5 +7,6 @@ exec 2>&1
 printenv | egrep -v 'DATABASE_URL|SECRET_KEY|LDAP_ADMIN' > /tmp/launch-env
 
 bundle exec rake db:migrate
+bundle exec rake jobs:work &
 
 exec bundle exec puma -w 3 --preload
