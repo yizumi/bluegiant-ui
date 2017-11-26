@@ -2,8 +2,8 @@ class BinanceExchangeApi
   class BinanceError < StandardError; end
 
   @@config = {
-    api_key: "vmPUZE6mv9SD5VNHk4HlWFsOr6aKE2zvsw0MuIgwCIPy6utIco14y7Ju91duEh8A",
-    api_secret: "NhqPtmdSJYdKjVHjA7PZj4Mge3R5YNiP1e3UZjInClVN65XAbvqqM6A7H5fATj0j",
+    api_key: "K1zY80pSb14rNRojH9H9MQwWmOiz2VPzYey7UF8GQsGPsbqVNgzPLKiB9vMUhtDU",
+    api_secret: "S00OgIKZdAADJpamR5Xm7uIB4hXUytgCWCr9jyfV9zjLiBk75vIMDjLYb0DiAVj1",
     base_url: "https://api.binance.com"
   }
 
@@ -19,6 +19,20 @@ class BinanceExchangeApi
       order.update_attributes!(
         status: :pending,
         external_order_id: json['orderId']
+      )
+    else
+      raise BinanceError, "Failed to place order: (#{res.code}) #{res.body}"
+    end
+  end
+
+  def place_test_order(order)
+    client = HTTPClient.new
+    res = client.post("#{@@config[:base_url]}/api/v3/order/test", header: with_api_key, body: build_order_body(order))
+    if HTTP::Status.successful?(res.code)
+      json = JSON.parse(res.body)
+      order.update_attributes!(
+        status: :cancelled,
+        external_order_id: order.uuid
       )
     else
       raise BinanceError, "Failed to place order: (#{res.code}) #{res.body}"

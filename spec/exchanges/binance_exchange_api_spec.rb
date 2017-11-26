@@ -31,9 +31,10 @@ RSpec.describe BinanceExchangeApi do
 
   before do
     WebMock.reset!
+    WebMock.disable_net_connect!(allow: %r{^https://api.binance.com/api/v3/order/test.*$})
     stub_request(:post, 'https://api.binance.com/api/v3/order')
       .to_return(status: 200, body: order_response)
-    stub_request(:get, /https:\/\/api\.binance\.com\/api\/v3\/order\?orderId=1&recvWindow=10000&signature=[a-z0-9]+&symbol=BTCUSD&timestamp=[0-9]+/)
+    stub_request(:get, %r{^https://api.binance.com/api/v3/order\?orderId=1&recvWindow=10000&signature=[a-z0-9]+&symbol=LTCBTC&timestamp=[0-9]+$})
       .to_return(status: 200, body: query_response)
   end
 
@@ -50,6 +51,19 @@ RSpec.describe BinanceExchangeApi do
     end
 
     context 'WHEN an invalid order is placed' do
+    end
+  end
+
+  describe '#place_test_order' do
+    context 'WHEN a valid order is palced for testing' do
+      let(:order) { create(:order) }
+      it 'SHOULD mark the order as cancelled' do
+        binance.place_test_order(order)
+
+        order.reload
+        expect(order.status).to eq(:cancelled)
+        expect(order.external_order_id).to eq(order.uuid)
+      end
     end
   end
 

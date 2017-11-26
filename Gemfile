@@ -15,13 +15,10 @@ gem 'ruby_dep'
 
 # system
 gem 'enumerize'
-gem 'httpclient'
 gem 'jbuilder', '~> 2.5'
 gem 'listen', '>= 3.0.5', '< 3.2'
 gem 'sentry-raven'
 gem 'weak_parameters'
-gem 'webmock'
-gem 'faraday'
 
 # front-end
 gem 'coffee-rails', '~> 4.2'
@@ -33,6 +30,10 @@ gem 'uglifier', '>= 1.3.0'
 # jobs
 gem 'delayed_job_active_record'
 gem 'scheduled_job'
+
+# net
+gem 'httpclient'
+gem 'httplog'
 
 # others
 gem 'aasm'
@@ -48,6 +49,7 @@ group :development, :test do
   gem 'rspec_junit_formatter'
   gem 'rubocop'
   gem 'spring-commands-rspec'
+  gem 'webmock'
 end
 
 group :test do

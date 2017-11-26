@@ -26,7 +26,7 @@
 
 FactoryBot.define do
   factory :order do
-    association :market, factory: :market
+    association :market, factory: :market, code: 'LTCBTC'
     uuid SecureRandom.uuid
     status :requested
     time_in_force :good_till_cancel
