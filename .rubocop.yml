@@ -1,15 +1,16 @@
+AllCops:
+  Exclude:
+    - 'db/**/*'
+    - 'vendor/**/*'
 LineLength:
   Max: 120
 Metrics/BlockLength:
   Exclude:
-  - 'spec/**/*'
-  - 'lib/tasks/**/*'
-  - 'db/schema.rb'
-  - 'db/migrate/**/*'
-  - 'Guardfile'
+    - 'spec/**/*'
+    - 'lib/tasks/**/*'
+    - 'Guardfile'
 Metrics/MethodLength:
   Exclude:
-  - 'spec/**/*'
-  - 'db/migrate/**/*'
+    - 'spec/**/*'
 Style/Documentation:
   Enabled: false

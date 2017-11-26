@@ -7,6 +7,12 @@ class Broker
     def process(order)
       exchange_api = find_exchange_api(order.market.exchange.code)
       raise BrokerError, "Unsupported exchange #{order.market.exchange.code}" if exchange_api.nil?
+      process_order(exchange_api, order)
+    end
+
+    private
+
+    def process_order(exchange_api, order)
       case order.status
       when :requested
         exchange_api.place_order(order)
@@ -19,14 +25,12 @@ class Broker
       end
     end
 
-    private
-
     def find_exchange_api(exchange_code)
       exchanges[exchange_code]
     end
 
     def exchanges
-      @@exchanges ||= {
+      @exchanges ||= {
         'BINA' => BinanceExchangeApi.new
       }
     end

@@ -31,12 +31,13 @@ RSpec.describe BinanceExchangeApi do
     }.to_json
   end
 
+  # rubocop:disable Metrics/LineLength
   before do
     WebMock.reset!
     WebMock.disable_net_connect!(allow: %r{^https://api.binance.com/api/v3/order/test.*$})
     stub_request(:post, 'https://api.binance.com/api/v3/order')
       .to_return(status: 200, body: order_response)
-    stub_request(:get, %r{^https://api.binance.com/api/v3/order\?orderId=1&recvWindow=10000&signature=[a-z0-9]+&symbol=LTCBTC&timestamp=[0-9]+$})
+    stub_request(:get, %r{^https://api.binance.com/api/v3/order\?orderId=1&recvWindow=[0-9]+&signature=[a-z0-9]+&symbol=LTCBTC&timestamp=[0-9]+$})
       .to_return(status: 200, body: query_response)
   end
 
