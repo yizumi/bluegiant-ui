@@ -13,8 +13,9 @@ class CoinigyService
 
   def fetch_exchanges
     res = http_post('/api/v1/exchanges')
-    data = JSON.parse(res.body, symbolize_names: true)[:data]
-    data.map { |e| Exchange.from_json(e) }
+    json = JSON.parse(res.body, symbolize_names: true)
+    check_json_response(json)
+    json[:data].map { |e| Exchange.from_json(e) }
   end
 
   def refresh_markets(exchange)
@@ -25,8 +26,9 @@ class CoinigyService
 
   def fetch_markets(exchange)
     res = http_post('/api/v1/markets', 'exchange_code': exchange.code)
-    data = JSON.parse(res.body, symbolize_names: true)[:data]
-    data.map { |m| Market.from_json(exchange, m) }
+    json = JSON.parse(res.body, symbolize_names: true)
+    check_json_response(json)
+    json[:data].map { |m| Market.from_json(exchange, m) }
   end
 
   private
@@ -34,8 +36,12 @@ class CoinigyService
   def http_post(url, body = nil)
     client = HTTPClient.new
     res = client.post("#{BASE_URL}#{url}", body&.to_json, auth_headers)
-    raise StandardError unless res.status == 200
+    raise CoinigyServiceError, "Error while post request: (#{res.status}) #{res.body}" unless res.status == 200
     res
+  end
+
+  def check_json_response(json)
+    raise CoinigyServiceError, "Coinigy returned error json message: #{json.to_json}" if json.key?(:err_num)
   end
 
   def auth_headers
