@@ -5,4 +5,4 @@ ScheduledJob.configure do |config|
 end
 
 # Add jobs to execute
-# ProcessOrdersJob.schedule_job
+ProcessOrdersJob.schedule_job

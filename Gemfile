@@ -30,6 +30,7 @@ gem 'uglifier', '>= 1.3.0'
 # jobs
 gem 'delayed_job_active_record'
 gem 'scheduled_job'
+gem 'daemons'
 
 # net
 gem 'httpclient'

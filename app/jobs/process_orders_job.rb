@@ -16,7 +16,7 @@ class ProcessOrdersJob
   end
 
   def self.time_to_recur(last_run_at)
-    last_run_at.end_of_day + 5.seconds
+    last_run_at + 5.seconds
   end
 
   def logger
