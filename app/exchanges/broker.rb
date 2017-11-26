@@ -31,6 +31,7 @@ class Broker
 
     def exchanges
       @exchanges ||= {
+        'TEST' => TestExchangeApi.new,
         'BINA' => BinanceExchangeApi.new
       }
     end
