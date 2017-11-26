@@ -5,9 +5,11 @@ Metrics/BlockLength:
   - 'spec/**/*'
   - 'lib/tasks/**/*'
   - 'db/schema.rb'
+  - 'db/migrate/**/*'
   - 'Guardfile'
 Metrics/MethodLength:
   Exclude:
   - 'spec/**/*'
+  - 'db/migrate/**/*'
 Style/Documentation:
   Enabled: false

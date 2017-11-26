@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: orders
@@ -33,7 +34,7 @@ class Order < ApplicationRecord
   enum side: { buy: 1, sell: 2 }
   enum price_type: { limit_order: 3, stop_limit_order: 6, limit_margin_order: 8, stop_limit_margin_order: 9 }
 
-  scope :open_orders, -> { where(status: [:requested, :pending, :requested_cancel, :pending_cancel]) }
+  scope :open_orders, -> { where(status: %i[requested pending requested_cancel pending_cancel]) }
 
   def status
     self[:status]&.to_sym

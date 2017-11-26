@@ -1,16 +1,18 @@
-class ProcessOrdersJob 
+# frozen_string_literal: true
+
+class ProcessOrdersJob
   include ::ScheduledJob
-  
+
   def display_name
     'orders:process'
   end
 
   def perform
-    logger.info "Process orders in the database"
+    logger.info 'Process orders in the database'
     Order.open_orders.each do |order|
       Broker.process(order)
     end
-    logger.info "All orders processed"
+    logger.info 'All orders processed'
   end
 
   def self.time_to_recur(last_run_at)

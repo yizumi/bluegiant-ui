@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe BinanceExchangeApi do
@@ -7,7 +9,7 @@ RSpec.describe BinanceExchangeApi do
       'symbol'          => 'LTCBTC',
       'orderId'         => 1,
       'clientOrderId'   => 'myOrder1',
-      'transactTime'    => 1499827319559
+      'transactTime'    => 1_499_827_319_559
     }.to_json
   end
 
@@ -25,7 +27,7 @@ RSpec.describe BinanceExchangeApi do
       'side'            => 'BUY',
       'stopPrice'       => '0.0',
       'icebergQty'      => '0.0',
-      'time'            => 1499827319559
+      'time'            => 1_499_827_319_559
     }.to_json
   end
 
@@ -72,7 +74,7 @@ RSpec.describe BinanceExchangeApi do
       let(:order) { create(:order, status: :pending, external_order_id: 1) }
       it 'SHOULD be marked as :executed AND amount is updated' do
         binance.track_order(order)
-        
+
         order.reload
         expect(order.status).to eq(:executed)
         expect(order.remaining_quantity).to eq(0)

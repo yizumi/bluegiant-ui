@@ -1,10 +1,12 @@
+# frozen_string_literal: true
+
 class BinanceExchangeApi
   class BinanceError < StandardError; end
 
   @@config = {
-    api_key: "K1zY80pSb14rNRojH9H9MQwWmOiz2VPzYey7UF8GQsGPsbqVNgzPLKiB9vMUhtDU",
-    api_secret: "S00OgIKZdAADJpamR5Xm7uIB4hXUytgCWCr9jyfV9zjLiBk75vIMDjLYb0DiAVj1",
-    base_url: "https://api.binance.com"
+    api_key: 'K1zY80pSb14rNRojH9H9MQwWmOiz2VPzYey7UF8GQsGPsbqVNgzPLKiB9vMUhtDU',
+    api_secret: 'S00OgIKZdAADJpamR5Xm7uIB4hXUytgCWCr9jyfV9zjLiBk75vIMDjLYb0DiAVj1',
+    base_url: 'https://api.binance.com'
   }
 
   def self.configure(config)
@@ -74,31 +76,31 @@ class BinanceExchangeApi
 
   def build_order_body(order)
     params = [
-      { 'symbol'            => order.market.code.gsub('/', '') },
+      { 'symbol'            => order.market.code.delete('/') },
       { 'side'              => order.side.upcase },
       { 'type'              => encode_price_type(order.price_type) },
       { 'timeInForce'       => encode_time_in_force(order.time_in_force) },
       { 'quantity'          => order.quantity },
       { 'price'             => order.price },
-      { 'recvWindow'        => 10000 },
+      { 'recvWindow'        => 10_000 },
       { 'newClientOrderId'  => order.uuid },
       { 'timestamp'         => timestamp }
     ]
-    payload = params.map { |p| p.to_param }.join('&')
-    signature = OpenSSL::HMAC::hexdigest(OpenSSL::Digest::SHA256.new, @@config[:api_secret], payload)
-    payload + '&' + {'signature' => signature }.to_param
+    payload = params.map(&:to_param).join('&')
+    signature = OpenSSL::HMAC.hexdigest(OpenSSL::Digest::SHA256.new, @@config[:api_secret], payload)
+    payload + '&' + { 'signature' => signature }.to_param
   end
 
   def build_order_query(order)
     params = [
-      { 'symbol'            => order.market.code.gsub('/', '') },
+      { 'symbol'            => order.market.code.delete('/') },
       { 'orderId'           => order.external_order_id },
-      { 'recvWindow'        => 10000 },
+      { 'recvWindow'        => 10_000 },
       { 'timestamp'         => timestamp }
     ]
-    payload = params.map { |p| p.to_param }.join('&')
-    signature = OpenSSL::HMAC::hexdigest(OpenSSL::Digest::SHA256.new, @@config[:api_secret], payload)
-    payload + '&' + {'signature' => signature }.to_param
+    payload = params.map(&:to_param).join('&')
+    signature = OpenSSL::HMAC.hexdigest(OpenSSL::Digest::SHA256.new, @@config[:api_secret], payload)
+    payload + '&' + { 'signature' => signature }.to_param
   end
 
   def encode_price_type(price_type)
