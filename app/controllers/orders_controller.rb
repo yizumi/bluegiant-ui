@@ -23,10 +23,10 @@ class OrdersController < ApplicationController
   end
 
   def market
-    @market ||= Market.find_by(exchange: exchange, code: params[:market_id])
+    @market ||= Market.where('id = ? or (exchange_id = ? and code = ?)', params[:market_id].to_i, exchange&.id.to_i, params[:market_id]).first
   end
 
   def exchange
-    @exchange ||= Exchange.find_by(code: params[:exchange_id])
+    @exchange ||= Exchange.where('id = ? or code = ?', params[:exchange_id].to_i, params[:exchange_id]).first
   end
 end
