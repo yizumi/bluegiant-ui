@@ -27,6 +27,7 @@
 
 class Order < ApplicationRecord
   belongs_to :market
+  before_create :init_params
 
   # end_states: [executed, cancelled, rejected, expired]
   enum status: {
@@ -59,8 +60,28 @@ class Order < ApplicationRecord
   }
 
   scope :open_orders, -> { where(status: %i[requested pending requested_cancel pending_cancel]) }
-
+  
   def status
     self[:status]&.to_sym
+  end
+
+  def time_in_force
+    self[:time_in_force]&.to_sym
+  end
+
+  def side
+    self[:side]&.to_sym
+  end
+
+  def price_type
+    self[:price_type]&.to_sym
+  end
+
+  private
+
+  def init_params
+    self[:uuid] ||= SecureRandom.uuid
+    self[:status] ||= :requested
+    self[:remaining_quantity] ||= quantity
   end
 end

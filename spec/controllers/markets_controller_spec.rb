@@ -35,7 +35,7 @@ RSpec.describe MarketsController, type: :controller do
     context 'AS Alex WHEN accesses market description' do
       render_views
       it 'THEN should show the description of the market' do
-        get :show, params: { id: market.id, format: :json }
+        get :show, params: { exchange_id: market.exchange.code, id: market.code, format: :json }
 
         expect(response).to have_http_status(200)
 
@@ -49,7 +49,8 @@ RSpec.describe MarketsController, type: :controller do
       let(:market) { create(:market) }
       it 'THEN should update the record' do
         patch :update, params: {
-          id: market.id,
+          exchange_id: market.exchange.code,
+          id: market.code,
           format: :json,
           subscribed: true
         }

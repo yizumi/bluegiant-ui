@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
 
   rescue_from WeakParameters::ValidationError do |e|
     logger.error e
-    head 400
+    render json: { message: e.message }, status: 400
   end
 
   rescue_from ActiveRecord::RecordNotFound do |e|

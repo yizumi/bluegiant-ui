@@ -18,7 +18,7 @@ class TestExchangeApi
     when :pending_cancel
       order.update_attributes!(status: :cancelled)
     else
-      raise TestExchangeError
+      raise TestExchangeError, "#{order.status} is not supported for track_order"
     end
   end
 

@@ -27,7 +27,11 @@ class MarketsController < ApplicationController
   private
 
   def market
-    @market ||= Market.find(params[:id].to_i)
+    @market ||= Market.where('id = ? or (exchange_id = ? and code = ?)', params[:id].to_i, exchange.id.to_i, params[:id]).first
+  end
+
+  def exchange
+    @exchange ||= Exchange.where('id = ? or code = ?', params[:exchange_id].to_i, params[:exchange_id]).first
   end
 
   def update_params
