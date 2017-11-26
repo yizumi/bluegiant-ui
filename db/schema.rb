@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171125125810) do
+ActiveRecord::Schema.define(version: 20171126035334) do
 
   create_table "delayed_jobs", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer "priority", default: 0, null: false
@@ -60,6 +60,7 @@ ActiveRecord::Schema.define(version: 20171125125810) do
     t.decimal "price", precision: 15, scale: 10, null: false
     t.decimal "quantity", precision: 15, scale: 10, null: false
     t.decimal "remaining_quantity", precision: 15, scale: 10, null: false
+    t.string "error_message"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["external_order_id"], name: "index_orders_on_external_order_id"

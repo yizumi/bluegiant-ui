@@ -1,5 +1,4 @@
 # frozen_string_literal: true
-
 # == Schema Information
 #
 # Table name: orders
@@ -15,6 +14,7 @@
 #  price              :decimal(15, 10)  not null
 #  quantity           :decimal(15, 10)  not null
 #  remaining_quantity :decimal(15, 10)  not null
+#  error_message      :string(255)
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
 #
