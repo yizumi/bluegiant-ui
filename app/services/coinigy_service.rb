@@ -47,8 +47,8 @@ class CoinigyService
   def auth_headers
     {
       'Content-Type' => 'application/json',
-      'X-API-KEY' => 'cca9053c13ee18875d1e66244d3660a4',
-      'X-API-SECRET' => '781bea8281b85a7e63fbb9d83aea7bcf'
+      'X-API-KEY' => 'e60cb433e8e37bf0c9784cf7d1ff7e44',
+      'X-API-SECRET' => '4a48a223081f54c3130de7c904305f77'
     }
   end
 end
